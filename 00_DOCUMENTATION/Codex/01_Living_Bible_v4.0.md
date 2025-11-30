@@ -581,3 +581,218 @@ into rhythm.
 
 The one who leads the Broken  
 home.
+---
+
+## SCROLL 006 — THE TWELVE ZONES  
+*The Astral Map of Resonantia*
+
+Resonantia is not a flat world.  
+It is a **frequency plane**—a shifting dimension of harmonic landscapes,  
+each carved by one of the **Twelve Cosmic Scripts**.
+
+These Scripts are not gods.  
+They are not constellations.  
+They are **archetypal frequency fields** that shape emotion, physics, memory, and combat.
+
+Each Zone is a battlefield, a temple, a state of mind.
+
+---
+
+### ARIES — THE RED WASTES  
+*Aggression. Initiation. First Strike.*
+
+A desert of cracked magma and pulsing crimson clouds.  
+Every breath tastes like hot iron.  
+The ground vibrates at 220 BPM.
+
+**Zone Effects:**  
+- +10% critical chance on all attacks  
+- First strike of combat deals massive bonus damage  
+- Environmental eruptions sync to kickdrums
+
+**Emotion:** Fury sharpened into purpose.  
+**Dominant Houses:** Fenrir, Ares.
+
+---
+
+### TAURUS — THE IRON STEPPES  
+*Endurance. Weight. Structure.*
+
+Endless metallic plains under a dark amber sky.  
+Massive steel monoliths hum with low-frequency drones.
+
+**Zone Effects:**  
+- +armor on all Defensive cards  
+- Tremor shockwaves every 3 turns  
+- Stable, slow, crushing combat tempo
+
+**Emotion:** Stubborn strength.  
+**Dominant Houses:** Anubis, Oni.
+
+---
+
+### GEMINI — THE FRACTURED PEAKS  
+*Duality. Glitch. Chaos.*
+
+Crystal mountains split by neon fault lines.  
+Reality flickers like a corrupted screen.
+
+**Zone Effects:**  
+- 50% chance for cards to fire twice—or fail  
+- Randomized targeting  
+- Temporal glitches alter turn order
+
+**Emotion:** Instability.  
+**Dominant Houses:** Loki, Onmyoji.
+
+---
+
+### CANCER — THE BIOLUME CAVES  
+*Healing. Memory. Nurture.*
+
+Glowing caverns lit by soft blue organisms.  
+Echoes of forgotten voices ripple through the liquid air.
+
+**Zone Effects:**  
+- All healing is amplified  
+- Cyclical tidal surges restore HP to all units  
+- Protectors thrive here
+
+**Emotion:** Safety tinged with sorrow.  
+**Dominant Houses:** Ryujin, Poseidon.
+
+---
+
+### LEO — THE GOLDEN COLISEUM  
+*Pride. Spectacle. Triumph.*
+
+A vast arena suspended in the sky,  
+ringed with holographic lions and blinding gold light.
+
+**Zone Effects:**  
+- First attack each turn deals extra damage  
+- Bonus power when defeating enemies  
+- Style-based rewards
+
+**Emotion:** Dominance.  
+**Dominant Houses:** Thor, Apollo.
+
+---
+
+### VIRGO — THE CLOCKWORK GARDENS  
+*Precision. Purification. Calculation.*
+
+A labyrinth of mechanical vines and ticking flora.  
+Every leaf is a gear. Every flower is an algorithm.
+
+**Zone Effects:**  
+- +25% accuracy  
+- Auto-execution on low-HP enemies  
+- Punishes sloppy timing
+
+**Emotion:** Focus.  
+**Dominant Houses:** Athena, Kitsune.
+
+---
+
+### LIBRA — THE CELESTIAL ARCHIVES  
+*Balance. Judgment. Memory.*
+
+A floating library of endless glass corridors,  
+filled with cosmic scales and drifting books of light.
+
+**Zone Effects:**  
+- One debuff cleansed per turn  
+- Balance Enforcement punishes unequal HP  
+- Symmetrical combat design
+
+**Emotion:** Clarity.  
+**Dominant Houses:** Ra, Apollo.
+
+---
+
+### SCORPIO — THE OBSIDIAN CRYPTS  
+*Corruption. Poison. Slow Death.*
+
+Black tunnels carved in volcanic glass.  
+Poisonous mist rolls across the floor like a living shadow.
+
+**Zone Effects:**  
+- Poison effects last longer  
+- End-of-turn HP rot  
+- Attrition-based combat
+
+**Emotion:** Dread.  
+**Dominant Houses:** Set, Hades.
+
+---
+
+### SAGITTARIUS — THE STELLAR EXPANSE  
+*Range. Precision. Hunt.*
+
+A cosmic desert of shattered stars and drifting asteroid ruins.  
+Every arrow is a comet frozen mid-flight.
+
+**Zone Effects:**  
+- Increased range on all ranged attacks  
+- Periodic comet strikes  
+- Combat favors mobility
+
+**Emotion:** Wanderlust.  
+**Dominant Houses:** Odin, Artemis.
+
+---
+
+### CAPRICORN — THE IRON BASTION  
+*Defense. Patience. Fortification.*
+
+A fortress-city built on shifting tectonic plates of metal.  
+Turrets rotate like clockwork guardians.
+
+**Zone Effects:**  
+- Turrets gain increased HP  
+- Periodic repositioning of structures  
+- Grounded, strategic combat
+
+**Emotion:** Resolve.  
+**Dominant Houses:** Hephaestus, Oni.
+
+---
+
+### AQUARIUS — THE NEON TIDES  
+*Chaos. Fluidity. Unpredictability.*
+
+An ocean of glowing circuitry waves  
+crashing against neon-lit shores.
+
+**Zone Effects:**  
+- Control-based debuffs apply global penalties  
+- All positions shuffle periodically  
+- Movement is chaotic and fast
+
+**Emotion:** Anarchy.  
+**Dominant Houses:** Qilin, Prometheus.
+
+---
+
+### PISCES — THE ABYSSAL GARDENS  
+*Dream. Illusion. Surrender.*
+
+A surreal dreamscape of floating petals and shifting water corridors.  
+Nothing stays still. Nothing is certain.
+
+**Zone Effects:**  
+- Sleep effects appear at random  
+- Healing costs reduced  
+- Combat becomes soft, blurry, abstract
+
+**Emotion:** Melancholy.  
+**Dominant Houses:** Tianlong, Poseidon.
+
+---
+
+These are the Twelve Zones.  
+The **aetheric geography** of Resonantia.  
+Where myth meets battlefield.  
+Where emotion becomes environment.  
+Where the Broken learn to fight in the terrain of their own hearts.
