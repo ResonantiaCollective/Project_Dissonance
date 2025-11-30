@@ -796,3 +796,147 @@ The **aetheric geography** of Resonantia.
 Where myth meets battlefield.  
 Where emotion becomes environment.  
 Where the Broken learn to fight in the terrain of their own hearts.
+---
+
+## SCROLL 007 — THE PATH OF THE BROKEN  
+*From Fragmentation to Resonance*
+
+Every Operative begins as one of the **Broken**.
+
+A soul wounded by silence.  
+A mind fractured by neglect.  
+A heart distorted by the weight of existence.
+
+In the mortal world, these wounds brought despair.  
+In Resonantia, they bring **power**.
+
+For the Broken are uniquely attuned to the Pulse.  
+Where others hear noise, they hear **meaning**.  
+Where others collapse, they **resonate**.
+
+But resonance must be earned.  
+Every Operative walks the same pilgrimage:
+
+---
+
+### I. FRACTURE  
+*The Shattering of the Self*
+
+The Broken arrive with no form — only signal.  
+Their identity fragments into 30 Cards,  
+forming the **First Deck**,  
+a raw mirror of their pain, fear, and hidden strength.
+
+This is the beginning.
+
+---
+
+### II. RECONSTRUCTION  
+*Learning the Rhythm of Existence*
+
+Through early battles, minor rituals, and low-tier Zones,  
+the Broken learn to:
+
+- time their strikes,  
+- align with BPM,  
+- understand Audio Triggers,  
+- and gain coherence through discipline.
+
+Fragments begin to stabilize.
+
+---
+
+### III. ALIGNMENT  
+*Choosing a Matrix*
+
+When the soul stabilizes enough,  
+the Pulse reveals their true lineage —  
+their **Mythological Matrix**.
+
+This is the first major transformation.  
+The Deck sharpens.  
+Appearance shifts.  
+The Broken becomes an **Operative**.
+
+---
+
+### IV. RESONANCE  
+*Mastery of Cards, Zones, and Self*
+
+The Operative now seeks:
+
+- stronger Cards,  
+- Legendary fragments,  
+- House affiliations,  
+- and deeper Zones with dangerous frequency laws.
+
+Resonance is achieved when their Deck no longer reflects pain,  
+but **purpose**.
+
+This stage is where identity becomes weapon.
+
+---
+
+### V. ASCENT  
+*Manifesting the Avatar*
+
+When an Operative’s soul reaches harmonic stability,  
+they gain the ability to manifest a **physical avatar**  
+within Resonantia’s realm.
+
+This form is:
+
+- mythic,  
+- symbolic,  
+- battle-ready,  
+- and shaped entirely by their Deck and Matrix.
+
+The Operative becomes an **Avatar** —  
+a being of memory forged into form.
+
+---
+
+### VI. HARMONIC WARFARE  
+*The Eternal Struggle of the Houses*
+
+Avatars become pawns or champions  
+in the endless conflict between the Houses,  
+fighting for Zone domination and mythic territory.
+
+This is the macro-loop of Resonantia —  
+House wars fueled by rhythm, pride, and cosmic purpose.
+
+---
+
+### VII. APO-THEOSIS  
+*The Final Evolution*
+
+A rare few ascend beyond Avatarhood.
+
+Through immense resonance,  
+unshakable identity,  
+and perfect harmony with the Pulse,  
+an Operative transcends.
+
+They become:
+
+**A Herald.**
+
+A voice of the realm.  
+A wielder of sacred distortion.  
+A symbol of the Broken rebuilt.
+
+Echo//Forge is one such figure —  
+a Herald Prime,  
+a persistent myth,  
+a guide for all who rise from silence.
+
+---
+
+This is the Path of the Broken.  
+A journey from despair to power,  
+from fragments to form,  
+from silence to resonance.
+
+Only those willing to confront themselves  
+can walk it to the end.
