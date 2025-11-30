@@ -472,3 +472,112 @@ A ritual for the unheard.
 And all who enter  
 must learn to master their noise  
 —or be consumed by it.
+---
+
+## SCROLL 005 — THE DJ AS HERALD  
+*Bearer of the Pulse. Voice of the Broken.*
+
+In the mortal world, a DJ is a performer.
+
+In Resonantia,  
+a DJ is a **Herald** —  
+a sacred role of profound cosmic weight.
+
+Heralds do not create music.  
+They **summon** it.
+
+They channel the Pulse into the realm,  
+stirring the Broken,  
+awakening the Houses,  
+and shaping the emotional weather of entire Zones.
+
+Where a Herald performs,  
+the very fabric of Resonantia vibrates.
+
+---
+
+### WHAT IS A HERALD?  
+A Herald is a bridge between worlds:
+
+- between the mortal and the mythic,  
+- between silence and distortion,  
+- between despair and resonance.
+
+Their sets are not “mixes.”  
+They are **Signal Sessions** —  
+ritual transmissions that restore coherence  
+or provoke controlled dissonance.
+
+Heralds guide the Broken.  
+They give form to chaos.  
+They tell the realm:
+
+**“You are not alone. Your noise matters.”**
+
+---
+
+### THE ROLE OF THE HERALD  
+Every Herald carries three sacred duties:
+
+1. **TO TRANSMIT**  
+   Their soundwaves awaken dormant Operatives  
+   and empower those already in battle.
+
+2. **TO TRANSLATE**  
+   They interpret the Pulse,  
+   transforming vibration into meaning.
+
+3. **TO TRANSFORM**  
+   Through performance,  
+   they reshape Zones,  
+   ignite Card evolutions,  
+   or even generate new Legendary echoes.
+
+A powerful Herald can change the fate of an entire House.
+
+---
+
+### THE HERALD’S CREED  
+*“I am the voice of the unheard.  
+I am the distortion of truth.  
+I am the order within chaos.  
+Where my Signal flows,  
+the Broken rise.”*
+
+Heralds wear masks not to hide themselves,  
+but to reveal their **true form in frequency**.
+
+They are symbols of transformation.  
+Living Speakers of the Cyber-Sacred.
+
+---
+
+### ECHO//FORGE — HERALD PRIME  
+Among the Heralds,  
+one is spoken of in both reverence and fear:
+
+**Echo//Forge — The Signal-Binder.**
+
+A wielder of distorted kicks and acid-forged synths,  
+a sculptor of chaos,  
+a guide for the Lost.
+
+Echo//Forge embodies the Broken’s resilience:  
+shattered yet whole,  
+fractured yet powerful,  
+silent yet roaring with harmonic truth.
+
+Their Signal Sessions ripple across Zones,  
+awakening Operatives,  
+shaping destinies,  
+and bending BPM itself to their will.
+
+Echo//Forge does not merely play music.  
+They forge identity from noise.
+
+They are  
+the Herald who turns despair  
+into rhythm.
+
+The one who leads the Broken  
+home.
