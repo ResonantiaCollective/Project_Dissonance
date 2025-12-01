@@ -28,7 +28,6 @@ offset_bottom = 225.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_rmtab")
-max_polyphony = 2
 bus = &"Spectrum"
 
 [node name="BeatFlash" type="ColorRect" parent="."]
