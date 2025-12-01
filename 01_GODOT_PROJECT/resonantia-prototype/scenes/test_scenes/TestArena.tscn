@@ -7,44 +7,59 @@
 script = ExtResource("1_2s2s7")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 26.0
-offset_top = 222.0
-offset_right = 218.0
-offset_bottom = 245.0
+offset_left = 95.0
+offset_top = 231.0
+offset_right = 287.0
+offset_bottom = 254.0
+pivot_offset = Vector2(95, 32)
 text = "Resonantia Prototype A1"
 
 [node name="FeedbackLabel" type="Label" parent="."]
-offset_left = 229.0
-offset_top = 223.0
-offset_right = 269.0
-offset_bottom = 246.0
+offset_left = 138.0
+offset_top = 197.0
+offset_right = 175.0
+offset_bottom = 225.0
 
 [node name="ComboLabel" type="Label" parent="."]
-offset_left = 109.0
-offset_top = 277.0
-offset_right = 149.0
-offset_bottom = 300.0
+offset_left = 202.0
+offset_top = 202.0
+offset_right = 304.0
+offset_bottom = 225.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_rmtab")
+max_polyphony = 2
 bus = &"Spectrum"
 
 [node name="BeatFlash" type="ColorRect" parent="."]
-offset_left = 29.0
-offset_top = 252.0
-offset_right = 230.0
-offset_bottom = 331.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = 1133.0
+offset_bottom = 634.0
 color = Color(0.54901963, 0.627451, 0.6901961, 1)
 
 [node name="EnemyRect" type="ColorRect" parent="."]
-offset_left = 743.0
-offset_top = 246.0
-offset_right = 926.0
-offset_bottom = 321.0
+offset_left = 724.0
+offset_top = 271.0
+offset_right = 907.0
+offset_bottom = 346.0
 color = Color(0.5712787, 0.051279373, 0.33375794, 1)
 
 [node name="EnemyHPLabel" type="Label" parent="."]
-offset_left = 734.0
-offset_top = 222.0
-offset_right = 774.0
-offset_bottom = 245.0
+offset_left = 742.0
+offset_top = 220.0
+offset_right = 793.0
+offset_bottom = 243.0
+
+[node name="PlayerRect" type="ColorRect" parent="."]
+offset_left = 150.0
+offset_top = 258.0
+offset_right = 306.0
+offset_bottom = 337.0
+color = Color(0, 0.5527874, 0.55281144, 1)
+
+[node name="PlayerHPLabel" type="Label" parent="."]
+offset_left = 134.0
+offset_top = 332.0
+offset_right = 189.0
+offset_bottom = 361.0
