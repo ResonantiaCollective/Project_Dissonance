@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bc5inerhevpar"]
 
 [ext_resource type="Script" uid="uid://b31sehwagyvld" path="res://scripts/core/test_arena.gd" id="1_2s2s7"]
-[ext_resource type="AudioStream" uid="uid://tasxhx1cfun2" path="res://resources/audio/Impact_Mechanical.wav" id="2_rmtab"]
+[ext_resource type="AudioStream" uid="uid://bg74an3qkploh" path="res://resources/audio/IQUP_200_F_Kick_Loop_07.wav" id="2_rmtab"]
 
 [node name="TestArena" type="Node2D"]
 script = ExtResource("1_2s2s7")
@@ -13,5 +13,12 @@ offset_right = 198.0
 offset_bottom = 25.0
 text = "Resonantia Prototype A1"
 
+[node name="FeedbackLabel" type="Label" parent="."]
+offset_left = 19.0
+offset_top = 35.0
+offset_right = 59.0
+offset_bottom = 58.0
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_rmtab")
+bus = &"Spectrum"
