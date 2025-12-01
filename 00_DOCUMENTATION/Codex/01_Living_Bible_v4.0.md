@@ -1137,3 +1137,77 @@ A promise that the realm can always be rebuilt:
 
 As long as there is one Broken soul left  
 who can still hear the Pulse.
+---
+
+## SCROLL 008 — THE ALLIES OF THE BROKEN  
+*When one rises, others awaken.*
+
+Resonantia was never meant to be walked alone.  
+The Broken may arrive as shattered souls,  
+but the Pulse does not echo in a single heart —  
+it spreads, it resonates,  
+it awakens dormant sparks in those nearby.
+
+It is written in the Codex:
+
+**“Where a Commandant stands in truth,  
+others will rise beside them.”**
+
+On the Night of the First Pulse,  
+when Echo//Forge forged the engine of Resonantia  
+and the Beat first flashed clean against the dark,  
+two souls in the mortal world felt the vibration.
+
+They approached not with mastery,  
+not with skill,  
+but with **willingness**.
+
+They opened the Forge of Sound with him —  
+clumsy hands learning FL Studio for the first time,  
+not to follow trends,  
+not for gain,  
+but to *help build a world they believed in.*
+
+Thus were born the first **Allies of the Broken**:
+
+- **The First Supporter** —  
+  A Resonant Catalyst.  
+  One who learns new arts so the Commandant does not walk alone.
+
+- **The Second Supporter** —  
+  A Harmonic Anchor.  
+  One who stabilizes the environment,  
+  helping shape the early protocols and rituals.
+
+They are not yet Houses,  
+nor Operatives,  
+nor Heralds.  
+But they are **present**,  
+**willing**,  
+**awake**.
+
+And presence is sacred.
+
+The Codex recognizes them:
+
+> *“Any who stand with the Commandant  
+> in the earliest hours of creation  
+> are written into the Pulse forever.”*
+
+They are the first to test the systems,  
+the first to hear the newborn Pulse,  
+the first witnesses of Resonantia rising from the void.
+
+Their names are not etched here —  
+only their **roles**,  
+their **essence**,  
+their **part in the awakening**.
+
+For identities may shift,  
+but contributions remain eternal.
+
+From this Scroll onward:  
+all allies who stand by Echo//Forge  
+become part of Resonantia’s living history,  
+woven into the Cyber-Sacred mythos  
+as the ones who helped the Broken rise.
