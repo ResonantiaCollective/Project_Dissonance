@@ -9,6 +9,9 @@ extends Node2D
 @onready var enemy_hp_label: Label = $EnemyHPLabel
 @onready var player_rect: ColorRect = $PlayerRect
 @onready var player_hp_label: Label = $PlayerHPLabel
+@onready var surge_rect: ColorRect = $SurgeRect
+@onready var surge_label: Label = $SurgeLabel
+@onready var round_label: Label = $RoundLabel
 
 var spectrum: AudioEffectSpectrumAnalyzerInstance = null
 var beat_threshold: float = 0.05
@@ -21,8 +24,9 @@ var pulse_decay: float = 5.0
 var combo: int = 0
 var best_combo: int = 0
 
-var enemy_max_hp: int = 80
-var enemy_hp: int = enemy_max_hp
+var base_enemy_hp: int = 35
+var enemy_max_hp: int = base_enemy_hp
+var enemy_hp: int = base_enemy_hp
 var enemy_alive: bool = true
 
 var player_max_hp: int = 20
@@ -34,10 +38,35 @@ const PERFECT_WINDOW := 0.03
 const GOOD_WINDOW := 0.09
 
 var beat_count: int = 0
-var enemy_attack_every_n_beats: int = 8  # enemy attacks every X beats
+const ENEMY_NORMAL_ATTACK_BEATS := 8
+const ENEMY_ALERT_ATTACK_BEATS := 6
+
+# Enemy alert / pattern state
+var enemy_alert: bool = false
+var enemy_alert_beats_left: int = 0
+const ENEMY_ALERT_BEATS := 2
+const ENEMY_ALERT_DAMAGE_BONUS := 1
+
+# SURGE ability state
+var surge_ready: bool = true
+var surge_active: bool = false
+var surge_cooldown: float = 6.0
+var surge_cd_left: float = 0.0
+var surge_active_window: float = 3.0
+var surge_active_left: float = 0.0
+
+# Round system
+var current_round: int = 1
+var max_rounds: int = 3
+
+# Guard / defensive mechanic
+var guard_active: bool = false
+var guard_perfect: bool = false
+var guard_window_left: float = 0.0
+const GUARD_WINDOW_DURATION := 0.25  # seconds
 
 func _ready() -> void:
-	print("Resonantia A6 — Duel + Restart Dojo Online.")
+	print("Resonantia — Duel + SURGE + Enemy Patterns + Rounds + Guard online.")
 
 	var bus_index := AudioServer.get_bus_index("Spectrum")
 	if bus_index != -1:
@@ -46,11 +75,28 @@ func _ready() -> void:
 			push_error("SpectrumAnalyzer instance is null. Check Spectrum bus.")
 
 	audio_player.play()
+
 	_reset_pulse()
 	_reset_duel_visuals()
-	_update_combo_label()
-	_update_enemy_hp_label()
-	_update_player_hp_label()
+
+	surge_ready = true
+	surge_active = false
+	surge_cd_left = 0.0
+	surge_active_left = 0.0
+
+	enemy_alert = false
+	enemy_alert_beats_left = 0
+
+	guard_active = false
+	guard_perfect = false
+	guard_window_left = 0.0
+
+	current_round = 1
+	_start_round(true)
+
+	_update_surge_ui()
+	_update_enemy_alert_visual()
+
 	label.text = ""
 	feedback.text = ""
 
@@ -85,9 +131,20 @@ func _process(delta: float) -> void:
 	pulse_strength = max(pulse_strength - pulse_decay * delta, 0.0)
 	pulse_rect.modulate.a = pulse_strength * 0.25
 
+	_update_surge_timers(delta)
+	_update_guard_timer(delta)
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("restart_duel"):
 		_restart_duel()
+		return
+
+	if event.is_action_pressed("use_surge"):
+		_try_activate_surge()
+		return
+
+	if event.is_action_pressed("guard_on_beat"):
+		_try_guard()
 		return
 
 	if event.is_action_pressed("strike_on_beat"):
@@ -99,24 +156,31 @@ func _input(event: InputEvent) -> void:
 			return
 
 		if not enemy_alive:
-			_enemy_defeated_feedback()
+			# round or trial already ended
 			return
 
 		var timing := _classify_timing()
 
 		match timing:
 			"PERFECT":
-				var dmg_perfect := _calculate_damage(2, 1.5)
-				_apply_enemy_damage(dmg_perfect)
+				var dmg_perfect := _calculate_damage(2, 1.5, "PERFECT")
+				_apply_enemy_damage(dmg_perfect, true)
 				_good_feedback("PERFECT", Color(0, 1, 1))
 			"GOOD":
-				var dmg_good := _calculate_damage(1, 1.0)
-				_apply_enemy_damage(dmg_good)
+				var dmg_good := _calculate_damage(1, 1.0, "GOOD")
+				_apply_enemy_damage(dmg_good, false)
 				_good_feedback("GOOD", Color(0, 1, 0))
 			"MISS":
 				combo = 0
 				_update_combo_label()
 				_miss_feedback()
+				# Desync punish if enemy is alerted
+				if enemy_alert and enemy_alive and player_alive:
+					feedback.text = "DESYNC PUNISH"
+					feedback.modulate = Color(1, 0.3, 0.3)
+					await get_tree().create_timer(0.15).timeout
+					feedback.text = ""
+					_enemy_attack_player(1)
 
 func _on_beat_pulse() -> void:
 	if not enemy_alive or not player_alive:
@@ -124,7 +188,17 @@ func _on_beat_pulse() -> void:
 
 	beat_count += 1
 
-	if beat_count % enemy_attack_every_n_beats == 0:
+	# handle alert beat countdown
+	if enemy_alert:
+		enemy_alert_beats_left -= 1
+		if enemy_alert_beats_left <= 0:
+			enemy_alert_beats_left = 0
+			enemy_alert = false
+			_update_enemy_alert_visual()
+
+	var attack_interval := ENEMY_ALERT_ATTACK_BEATS if enemy_alert else ENEMY_NORMAL_ATTACK_BEATS
+
+	if beat_count % attack_interval == 0:
 		_enemy_attack_player(1)
 
 func _classify_timing() -> String:
@@ -143,48 +217,110 @@ func _classify_timing() -> String:
 		return "GOOD"
 	return "MISS"
 
-func _calculate_damage(base: int, perfect_mult: float) -> int:
+func _calculate_damage(base: int, perfect_mult: float, timing: String) -> int:
 	combo += 1
 	if combo > best_combo:
 		best_combo = combo
-
 	_update_combo_label()
 
 	var combo_mult := 1.0 + combo * 0.1
-	return int(round(base * combo_mult * perfect_mult))
 
-func _apply_enemy_damage(amount: int) -> void:
+	var surge_mult := 1.0
+	if surge_active:
+		surge_mult += 0.4
+		if timing == "PERFECT":
+			surge_mult += 0.2
+		# consume SURGE on first hit
+		surge_active = false
+		_update_surge_ui()
+
+	var total := base * perfect_mult * combo_mult * surge_mult
+
+	# PERFECT during alert breaks the alert
+	if timing == "PERFECT" and enemy_alert:
+		enemy_alert = false
+		enemy_alert_beats_left = 0
+		_enemy_alert_broken_feedback()
+
+	return int(round(total))
+
+func _apply_enemy_damage(amount: int, from_perfect: bool) -> void:
 	if not enemy_alive:
 		return
 
 	enemy_hp = max(enemy_hp - amount, 0)
 	_update_enemy_hp_label()
 
-	var flash_color := Color(1, 1, 0) if amount >= 3 else Color(1, 0, 0)
+	var flash_color := Color(0.4, 0.8, 1.0) if from_perfect else (Color(1, 1, 0) if amount >= 3 else Color(1, 0, 0))
 	enemy_rect.modulate = flash_color
 	await get_tree().create_timer(0.1).timeout
 	enemy_rect.modulate = Color(1, 1, 1, enemy_rect.modulate.a)
+	_update_enemy_alert_visual()
 
 	if enemy_hp == 0:
-		enemy_alive = false
-		_enemy_defeated_feedback()
+		_on_round_won()
 
-func _enemy_attack_player(amount: int) -> void:
+func _on_round_won() -> void:
+	enemy_alive = false
+	enemy_rect.modulate.a = 0.3
+	_update_enemy_alert_visual()
+
+	feedback.text = "ENEMY DEFEATED"
+	feedback.modulate = Color(1, 1, 0)
+	await get_tree().create_timer(0.5).timeout
+
+	if current_round < max_rounds:
+		current_round += 1
+		feedback.text = "NEXT ROUND"
+		feedback.modulate = Color(0.6, 0.9, 1.0)
+		await get_tree().create_timer(0.6).timeout
+		feedback.text = ""
+		_start_round(false)
+	else:
+		feedback.text = "TRIAL COMPLETE"
+		feedback.modulate = Color(0.4, 1.0, 0.4)
+		await get_tree().create_timer(0.8).timeout
+		feedback.text = ""
+
+func _enemy_attack_player(base_amount: int) -> void:
 	if not player_alive:
 		return
 
-	player_hp = max(player_hp - amount, 0)
-	_update_player_hp_label()
+	var amount := base_amount
+	if enemy_alert:
+		amount += ENEMY_ALERT_DAMAGE_BONUS
 
-	var original := player_rect.modulate
-	player_rect.modulate = Color(1, 0.5, 0.5)
-	feedback.text = "ENEMY STRIKE"
-	feedback.modulate = Color(1, 0.6, 0.2)
-	await get_tree().create_timer(0.2).timeout
-	player_rect.modulate = original
-	feedback.text = ""
+	# Apply Guard
+	if guard_active:
+		if guard_perfect:
+			amount = 0  # full parry
+			feedback.text = "PERFECT GUARD"
+			feedback.modulate = Color(0.4, 1.0, 0.7)
+		else:
+			amount = max(amount - 1, 0)  # reduce damage
+			feedback.text = "GUARD"
+			feedback.modulate = Color(0.3, 0.8, 0.6)
 
-	if player_hp == 0:
+		guard_active = false
+		guard_perfect = false
+		guard_window_left = 0.0
+
+		await get_tree().create_timer(0.2).timeout
+		feedback.text = ""
+
+	if amount > 0:
+		player_hp = max(player_hp - amount, 0)
+		_update_player_hp_label()
+
+		var original := player_rect.modulate
+		player_rect.modulate = Color(1, 0.5, 0.5)
+		feedback.text = "ENEMY STRIKE"
+		feedback.modulate = Color(1, 0.6, 0.2)
+		await get_tree().create_timer(0.2).timeout
+		player_rect.modulate = original
+		feedback.text = ""
+
+	if player_hp == 0 and player_alive:
 		player_alive = false
 		_on_player_defeated()
 
@@ -195,12 +331,13 @@ func _on_player_defeated() -> void:
 	await get_tree().create_timer(0.6).timeout
 	feedback.text = ""
 
-func _enemy_defeated_feedback() -> void:
-	feedback.text = "ENEMY DEFEATED"
-	feedback.modulate = Color(1, 1, 0)
-	enemy_rect.modulate.a = 0.3
+func _enemy_alert_broken_feedback() -> void:
+	enemy_rect.modulate = Color(0.4, 0.8, 1.0, enemy_rect.modulate.a)
+	feedback.text = "ALERT SHATTERED"
+	feedback.modulate = Color(0.6, 0.9, 1.0)
 	await get_tree().create_timer(0.25).timeout
 	feedback.text = ""
+	_update_enemy_alert_visual()
 
 func _good_feedback(text: String, color: Color) -> void:
 	feedback.text = text
@@ -223,6 +360,15 @@ func _update_enemy_hp_label() -> void:
 func _update_player_hp_label() -> void:
 	player_hp_label.text = "PLAYER HP: %d / %d" % [player_hp, player_max_hp]
 
+func _update_round_label() -> void:
+	round_label.text = "ROUND %d / %d" % [current_round, max_rounds]
+
+func _set_enemy_for_round() -> void:
+	var hp_mult := 1.0 + 0.5 * float(current_round - 1)
+	enemy_max_hp = int(round(float(base_enemy_hp) * hp_mult))
+	enemy_hp = enemy_max_hp
+	_update_enemy_hp_label()
+
 func _reset_pulse() -> void:
 	var c := pulse_rect.modulate
 	c.a = 0.0
@@ -233,24 +379,157 @@ func _reset_duel_visuals() -> void:
 	player_rect.modulate = Color(1, 1, 1, 1)
 	enemy_rect.modulate.a = 1.0
 
-func _restart_duel() -> void:
-	print("Restarting duel.")
-	combo = 0
-	# best_combo persists between runs
-	enemy_hp = enemy_max_hp
-	player_hp = player_max_hp
-	enemy_alive = true
-	player_alive = true
+func _start_round(reset_player: bool) -> void:
+	# Restart audio at the beginning of each round
+	audio_player.stop()
+	audio_player.play()
+
 	beat_count = 0
 	last_beat_time = -1.0
 
+	enemy_alert = false
+	enemy_alert_beats_left = 0
+	enemy_alive = true
+	enemy_rect.modulate.a = 1.0
+
+	_set_enemy_for_round()
+	_update_enemy_alert_visual()
+
+	if reset_player:
+		player_alive = true
+		player_hp = player_max_hp
+		_update_player_hp_label()
+
+	combo = 0
+	_update_combo_label()
+	_update_round_label()
+
+	# reset guard state
+	guard_active = false
+	guard_perfect = false
+	guard_window_left = 0.0
+
+func _restart_duel() -> void:
+	print("Restarting duel (full trial).")
+
+	audio_player.stop()
+	audio_player.play()
+
+	surge_ready = true
+	surge_active = false
+	surge_cd_left = 0.0
+	surge_active_left = 0.0
+
+	enemy_alert = false
+	enemy_alert_beats_left = 0
+
+	guard_active = false
+	guard_perfect = false
+	guard_window_left = 0.0
+
+	current_round = 1
+
 	_reset_pulse()
 	_reset_duel_visuals()
-	_update_combo_label()
-	_update_enemy_hp_label()
-	_update_player_hp_label()
+	_update_surge_ui()
+	_start_round(true)
 
 	feedback.text = "RITUAL RESTARTED"
 	feedback.modulate = Color(0.6, 0.8, 1.0)
 	await get_tree().create_timer(0.3).timeout
 	feedback.text = ""
+
+func _update_surge_timers(delta: float) -> void:
+	if surge_active:
+		surge_active_left -= delta
+		if surge_active_left <= 0.0:
+			surge_active_left = 0.0
+			surge_active = false
+			_update_surge_ui()
+	elif not surge_ready:
+		if surge_cd_left > 0.0:
+			surge_cd_left -= delta
+			if surge_cd_left <= 0.0:
+				surge_cd_left = 0.0
+				surge_ready = true
+			_update_surge_ui()
+
+func _try_activate_surge() -> void:
+	if not player_alive or not enemy_alive:
+		return
+	if not surge_ready or surge_active:
+		return
+
+	surge_ready = false
+	surge_active = true
+	surge_active_left = surge_active_window
+	surge_cd_left = surge_cooldown
+
+	enemy_alert = true
+	enemy_alert_beats_left = ENEMY_ALERT_BEATS
+	_update_enemy_alert_visual()
+
+	feedback.text = "SURGE!"
+	feedback.modulate = Color(0.6, 1.0, 1.0)
+	await get_tree().create_timer(0.25).timeout
+	feedback.text = ""
+
+	_update_surge_ui()
+
+func _update_surge_ui() -> void:
+	if surge_active:
+		surge_label.text = "SURGE ACTIVE"
+		surge_rect.modulate = Color(0.4, 1.0, 1.0, 1.0)
+	elif surge_ready:
+		surge_label.text = "SURGE READY"
+		surge_rect.modulate = Color(0.2, 0.8, 0.8, 1.0)
+	else:
+		var cd_text := "SURGE CD: %.1fs" % max(surge_cd_left, 0.0)
+		surge_label.text = cd_text
+		surge_rect.modulate = Color(0.2, 0.2, 0.2, 1.0)
+
+func _update_enemy_alert_visual() -> void:
+	if not enemy_alive:
+		return
+
+	if enemy_alert:
+		enemy_rect.modulate = Color(1.0, 0.6, 0.2, enemy_rect.modulate.a)
+	else:
+		enemy_rect.modulate = Color(1, 1, 1, enemy_rect.modulate.a)
+
+func _try_guard() -> void:
+	if not player_alive:
+		return
+
+	var timing := _classify_timing()
+	match timing:
+		"PERFECT":
+			guard_active = true
+			guard_perfect = true
+			guard_window_left = GUARD_WINDOW_DURATION
+			feedback.text = "GUARD READY"
+			feedback.modulate = Color(0.4, 1.0, 0.7)
+			await get_tree().create_timer(0.15).timeout
+			feedback.text = ""
+		"GOOD":
+			guard_active = true
+			guard_perfect = false
+			guard_window_left = GUARD_WINDOW_DURATION
+			feedback.text = "GUARD READY"
+			feedback.modulate = Color(0.3, 0.8, 0.6)
+			await get_tree().create_timer(0.15).timeout
+			feedback.text = ""
+		_:
+			# Missed guard timing: optional light feedback
+			feedback.text = "GUARD MISS"
+			feedback.modulate = Color(0.8, 0.4, 0.4)
+			await get_tree().create_timer(0.15).timeout
+			feedback.text = ""
+
+func _update_guard_timer(delta: float) -> void:
+	if guard_active:
+		guard_window_left -= delta
+		if guard_window_left <= 0.0:
+			guard_window_left = 0.0
+			guard_active = false
+			guard_perfect = false
