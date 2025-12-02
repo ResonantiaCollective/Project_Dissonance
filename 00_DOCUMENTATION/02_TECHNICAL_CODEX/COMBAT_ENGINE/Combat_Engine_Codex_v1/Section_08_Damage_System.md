@@ -254,7 +254,3 @@ Perfect Beats guaranteeing crits at high Harmony reflect true cosmic alignment.
 Shadowborn amplification is explained as:
 
 “A reflection striking back harder than the hand.”
-
-bash
-Copy code
-# END OF SECTION 8
