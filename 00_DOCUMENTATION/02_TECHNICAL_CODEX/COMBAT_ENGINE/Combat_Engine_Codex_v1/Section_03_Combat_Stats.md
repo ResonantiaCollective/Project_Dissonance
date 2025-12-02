@@ -1,10 +1,5 @@
 
 ---
-
-### 📘 Section 03 — Combat Stats  
-**File:** `Section_03_Combat_Stats.md`
-
-```markdown
 # COMBAT ENGINE CODEX v1.0  
 ## SECTION 3 — THE FOUR COMBAT STATS
 
