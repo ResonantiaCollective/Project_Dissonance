@@ -1,10 +1,5 @@
 
 ---
-
-### 📘 Section 04 — Status & Conditions  
-**File:** `Section_04_Status_System.md`
-
-```markdown
 # COMBAT ENGINE CODEX v1.0  
 ## SECTION 4 — STATUS EFFECTS & CONDITION SYSTEM
 
