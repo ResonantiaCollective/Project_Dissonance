@@ -1,135 +1,274 @@
-
----
-# COMBAT ENGINE CODEX v1.0  
-## SECTION 3 — THE FOUR COMBAT STATS
-
-### Technical Layer
-
-Both Player and Enemies use four core combat stats:
-
-- Impact
-- Harmony
-- Dissonance
-- Flow
+# COMBAT ENGINE CODEX v1  
+## SECTION 03 — COMBAT STATS
 
 ---
 
-### 3.1 Impact — Raw Force
+## 3.0 Purpose of Combat Stats
 
+Combat Stats define how powerful actions are, how tough actors are, and how
+they interact with timing, corruption, and abilities.
+
+Stats determine:
+
+- Base damage  
+- Defensive mitigation  
+- Ability scaling  
+- Initiative priority  
+- Resistances  
+- Overdrive / resource gain  
+
+Stats are never isolated — they always move through the **Resolution
+Pipeline** (Section 05).
+
+---
+
+## 3.1 Primary Stats
+
+These are the fundamental measures of power shared across all actors in
+Resonantia.
+
+### **ATTACK (ATK)**  
+Describes offensive power.
+
+- Increases base damage of attacks and abilities  
+- Scales with weapon, card, and ability modifiers  
+- Affected by corruption (can fluctuate)
+
+Used in formulas as:  
+
+base_damage = ATK * ability_multiplier
+
+---
+
+### **DEFENSE (DEF)**  
+Reduces incoming physical and neutral damage.
+
+Formula (simplified):
+
+damage_taken = incoming_damage * (100 / (100 + DEF))
+
+This creates **diminishing returns**, preventing invulnerability.
+
+DEF does **not** reduce:
+- pure corruption damage  
+- true damage  
+- certain enemy “frequency” attacks
+
+---
+
+### **FOCUS (FCS)**  
+Magical / ranged / rhythmic precision power.
+
+Affects:
+
+- ranged abilities  
+- rhythm-dependent scaling  
+- crit rate and crit damage  
+- ability stability under corruption
+
+Used as:
+
+crit_chance += (FCS * 0.05%)
+ability_precision += (FCS * 0.1)
+
+---
+
+### **VITALITY (VIT)**  
+Health- and endurance-related stat.
+
+- Increases max HP  
+- Slightly increases stagger resistance  
+- Modifies Overdrive gain under stress  
+
+Formula:
+
+max_hp = base_hp + (VIT * hp_per_point)
+
+---
+
+## 3.2 Secondary Stats
+
+These stats modify deeper combat systems.
+
+---
+
+### **SPEED (SPD)**  
 Controls:
 
-- base damage scaling
-- stagger power
-- hitstop intensity
-- knockback
-- armor-break efficiency
+- initiative_value in Action ordering  
+- frequency of status ticks  
+- movement responsiveness  
+- animation blend acceleration  
 
-Formula examples:
+In initiative:
 
-```text
-impact_factor = 1 + (Impact / 100.0)
-damage_after_impact = base_damage * impact_factor
+initiative_value = SPD * 2 + timing_bonus
 
-stagger_power = base_stagger * (1 + Impact * 0.005)
-hitstop_ms   = 3 + (Impact * 0.03)   # tune as needed
-3.2 Harmony — Rhythm Alignment
+---
 
-Controls:
+### **RESISTANCE (RES)**  
+Mitigates elemental or type-based damage:
 
-Perfect / Good beat bonuses
+- Fire  
+- Void  
+- Glitch  
+- Sonic  
+- Corruption (partially)
 
-resonance penetration
+Formula:
 
-Overdrive gain
+elemental_damage_taken = dmg * (1 - (RES / (RES + 150)))
 
-duration / potency for resonance-based effects
+---
+
+### **RESOLVE (RSL)**  
+A stat tied to psychological and metaphysical strength.
+
+Affects:
+
+- corruption exposure  
+- fear / stagger duration  
+- ability disruption resistance  
+- chance to ignore mind-type attacks  
+
+Higher RESOLVE means stability in distorted spaces.
+
+---
+
+### **RHYTHM MASTERY (RHM)**  
+How well the actor synchronizes with the Pulse.
+
+Affects:
+
+- timing windows (PERFECT/GOOD thresholds)  
+- critical chance on PERFECT timing  
+- Drop/Peak/Bass trigger sensitivity  
+- Overdrive gain from rhythm quality  
+
+Formula example:
+
+perfect_window = base_window + (RHM * 0.3ms)
+
+---
+
+## 3.3 Derived Stats
+
+These are not allocated directly but calculated.
+
+---
+
+### **CRIT CHANCE & CRIT DAMAGE**
+
+Base:
+
+crit_chance = (FCS * 0.5%) + item_bonus + rhythm_bonus
+crit_damage = 150% + (FCS * 0.2%)
+
+PERFECT timing grants temporary crit boosts:
+
+
+if rhythm_quality == PERFECT:
+crit_chance += 15%
+
+---
+
+### **OVERDRIVE GAIN**
+
+Derived from:
+
+- action type  
+- damage dealt  
+- damage taken  
+- rhythm quality  
+- corruption influence  
 
 Example:
-perfect_mult = 1 + Harmony * 0.02
-good_mult    = 1 + Harmony * 0.01
-poor_mult    = 1.0
-offbeat_mult = 0.8 - Harmony * 0.003
 
-Resonance penetration:
-resonance_pen = Harmony * 0.0035   # 0–0.35 (clamp)
+od_gain = base_gain + (damage_dealt * 0.1) + 
 
-Overdrive gain:
-overdrive_gain = base_gain * (1 + Harmony * 0.015)
+---
 
-3.3 Dissonance — Corruption & Off-Beat Mastery
+### **ACTION PRIORITY**
 
-Controls:
+From Section 02:
 
-corruption damage
+initiative_value = SPD * 2 + timing_bonus
+priority_layer determined by action type
 
-off-beat bonuses
+Corruption can randomly modify initiative by small bursts (+/-).
 
-reverse-sync benefits
+---
 
-Shadow Overdrive scaling
+## 3.4 Scaling Curves
 
-Examples:
-offbeat_bonus_mult = 1 + Dissonance * 0.02
-corruption_damage  = base_corruption * (1 + Dissonance * 0.03)
-shadow_overdrive_mult = 1 + Dissonance * 0.04
-inversion_chance_pct  = Dissonance * 0.4
+Stats do not scale linearly.
 
-3.4 Flow — Tempo & Motion
+Each primary stat uses a **mixed progression curve**:
 
-Controls:
+- early levels → linear  
+- mid-level → mild exponential  
+- late-game → diminishing return  
 
-dodge i-frames
+This prevents:
 
-movement distance
+- stat inflation  
+- one-shot builds  
+- invincible builds  
+- “wrong stat” uselessness
 
-recovery times
+All three engines (Player/Enemy/Combat) reference the same curves, ensuring
+fairness.
 
-beat-GCD threshold
+---
 
-cast times
+## 3.5 Stat Interactions with Rhythm
 
-Examples:
-recovery_time = base_recovery * (1 - Flow * 0.004)
-dash_distance = base_distance  * (1 + Flow * 0.005)
+Every stat interacts with rhythm in at least one way:
 
-if Flow >= 40:
-    gcd_beats = 0.5
-else:
-    gcd_beats = 1.0
+- ATK → bonus scaling for PERFECT strikes  
+- DEF → reduced impact of LATE guards  
+- FCS → expands timing precision  
+- SPD → affects rhythm-based counters  
+- RHM → improves windows & Drop sensitivity  
 
-cast_time = base_cast * (1 - Flow * 0.003)
+This reinforces the core principle:
 
-3.5 Universal Damage Formula (Overview)
+> **In Resonantia, stats are not passive numbers — they dance with the Pulse.**
 
-Detailed in other sections, but combined order:
-1. Impact          → power
-2. Harmony         → beat bonus
-3. Damage type     → physical / resonance / corruption
-4. Armor/Resist    → mitigation
-5. Dissonance      → off-beat / corruption boost
-6. Buffs/Debuffs   → multipliers
-7. Crit            → optional final multiplier
+---
 
-Lore Layer
+## 3.6 Stat Interactions with Corruption
 
-Impact — “The Hand That Shapes the World”
+Corruption introduces unpredictable distortions:
 
-“To strike is to declare one’s existence.”
+- ATK may spike or dip  
+- DEF may experience “fracture moments”  
+- FCS may glitch  
+- SPD may jitter  
+- RHM may suddenly desync  
 
-Harmony — “The Voice of the Pulse”
+Corruption never deletes stats — it **warps** them temporarily.
 
-“Those who walk in Harmony reshape the world without effort.”
+Enemy patterns and Shadow Overdrive can intentionally manipulate these
+distortions.
 
-Perfect Beats are moments where Operative and Pulse breathe together.
+---
 
-Dissonance — “The Shadow Behind Sound”
+## 3.7 Stat Integrity Rules
 
-“What is broken reveals what was hidden.”
+To keep combat readable and fair, all stats follow these laws:
 
-Power accrues to those who thrive in chaos.
+1. **Stats can never go below 1** (unless a special mechanic explicitly
+   overrides).  
+2. **Multiplicative bonuses apply after additive bonuses.**  
+3. **Corruption distortions never stack infinitely.**  
+4. **RHYTHM MASTERY always adjusts windows, never damage directly.**  
+5. **DEF never reduces true/corruption damage.**
 
-Flow — “The Eternal Motion”
+These rules prevent exploits and ensure every build path remains viable.
 
-“The world belongs to those who move before it thinks.”
+---
 
-Represents spiritual agility: the ability to slip between harsh events.
+*SECTION 03 ends here.*  
+Awaiting Operative confirmation before constructing  
+**SECTION 04 — STATUS SYSTEM**.

@@ -1,148 +1,340 @@
+# COMBAT ENGINE CODEX v1  
+## SECTION 05 — RESOLUTION PIPELINE  
+*The Heart of Combat*
+
 ---
-# COMBAT ENGINE CODEX v1.0  
-## SECTION 5 — PRIORITY STACK & RESOLUTION ORDER
 
-### Technical Layer
+## 5.0 Purpose of the Resolution Pipeline
 
-Global priority of combat events:
+The **Resolution Pipeline** is where actions become outcomes.
 
-```text
-1. Beat Events
-2. Player Input & Queues
-3. Enemy AI Decisions
-4. Trigger Events (Drop/Peak/Bass)
-5. Player Abilities
-6. Enemy Abilities
-7. Player Strikes
-8. Enemy Strikes
-9. Status Applications
-10. Resource Updates
-11. Corruption Engine
-12. Aftereffects
-13. Combat Log
+Every action (Section 02) enters this pipeline and exits as:
 
-5.1 Full Combat Pipeline
+- damage  
+- healing  
+- statuses  
+- knockback  
+- resource gain  
+- rhythm events  
+- corruption distortions  
+- AI state changes  
 
-Per tick / beat:
-0. Clock tick → Beat check
+Nothing in combat bypasses the pipeline.
 
-1. Classify beat window (perfect/good/poor/offbeat)
+This is the “truth forge” of Resonantia.
 
-2. Resolve player actions:
-   - queued actions
-   - dodge > ability > strike priority
+---
 
-3. Resolve enemy intent:
-   - AI state machine
-   - action selection
+## 5.1 Pipeline Overview
 
-4. Apply trigger events:
-   - Drop, Peak, Bass
-   - modify actions / statuses / corruption
+Every action flows through the same sequence:
 
-5. Resolve player abilities
+1. **PRE-CHECK → Eligibility**  
+2. **TIMING → Rhythm Scaling**  
+3. **BASE FORMULA → ATK/FCS/VIT scaling**  
+4. **MODIFIERS → Buffs / Debuffs / Status interactions**  
+5. **CORRUPTION → Distortion layer**  
+6. **DEFENSE → Mitigation / shields**  
+7. **FINALIZATION → Damage / healing / effects**  
+8. **PROPAGATION → Audio, VFX, AI**  
+9. **LOG → Historical record**
 
-6. Resolve enemy abilities
+This ensures deterministic, debuggable combat.
 
-7. Resolve strike collisions:
-   - hitboxes vs hurtboxes
-   - i-frames / blocks / parries (future)
+---
 
-8. Calculate damage:
-   - Impact / Harmony / Dissonance / Flow
-   - damage types
-   - armor / resistances
-   - crits
-   - corruption amplification
+## 5.2 Stage 1 — Pre-Check
 
-9. Apply statuses:
-   - buffs / debuffs / DoTs / corruption / control
-   - dispel logic
+Before anything else, the pipeline verifies:
 
-10. Update resources:
-   - energy, Overdrive, Shadow meter, Flow
+### ✔ Actor can act  
+- Not stunned  
+- Not frozen  
+- Not locked by special states  
+- Not dead  
 
-11. Corruption engine update:
-   - corruption gain
-   - reverse-sync checks
-   - Shadowborn transitions
+### ✔ All requirements met  
+- costs paid  
+- cooldowns available  
+- valid target(s)
 
-12. Aftereffects:
-   - knockback, stagger, hitstop, FX
+If a pre-check fails:
 
-13. Combat log entry
+- Action is cancelled  
+- A failure packet is returned  
+- No further pipeline stages run
 
-5.2 Player vs Enemy Priority
+---
 
-By default, if simultaneous:
+## 5.3 Stage 2 — Rhythm Scaling
 
-Player action resolves before enemy
+The action inherits its rhythm timing from Section 02.
 
-Exception: Trigger-driven boss actions may pre-empt
+There are four qualities:
 
-Tie-breaker order:
-1. Dodge
-2. Trigger-based enemy actions
-3. Player abilities
-4. Enemy abilities
-5. Player strikes
-6. Enemy strikes
-7. Damage events
-8. Status events
+- **PERFECT**  
+- **GOOD**  
+- **LATE**  
+- **MISS**
 
-5.3 Hit Protection System
+These influence:
 
-To avoid unfair instant deaths:
-Within a single beat window, a character cannot lose more than X% max HP,
-unless:
-- Staggered
-- Shadow-corrupted
-- Under boss phase transition rules
-Default: X = 35% (tunable)
+### Damage scaling:
 
-5.4 Godot Integration (CombatLoop)
+PERFECT: +25%
+GOOD: +10%
+LATE: -20%
+MISS: 0% (action whiffs)
 
-High-level script:
-CombatLoop.gd
-├ process_beat()
-├ resolve_player()
-├ resolve_enemy()
-├ resolve_triggers()
-├ resolve_abilities()
-├ resolve_strikes()
-├ resolve_status()
-├ resolve_corruption()
-└ write_to_log()
-Beat events driven by global BeatBus.
+### Crit chance bonus:
 
-Lore Layer
+PERFECT: +15%
+GOOD: +5%
+LATE: 0%
+MISS: 0%
 
-5.1 The Order of the Dance
+### Resource (Overdrive) gain:
 
-“First the Pulse speaks.
-Then the Operative answers.
-Then the world replies.”
+PERFECT: +20%
+GOOD: +10%
+LATE: +2%
+MISS: 0%
 
-This mirrors beat → player → enemy order.
+If **MISS**, skip straight to Propagation with a “miss” outcome.
 
-5.2 Why Player Strikes First
+---
 
-“The Operative is the tuning fork of creation.”
+## 5.4 Stage 3 — Base Formula
 
-5.3 Trigger Laws
+If the action deals damage, the base damage is computed from
+stats (Section 03):
 
-Drops/Peaks/Bass = Heavenly Decrees that can override normal sequences.
+base_damage = ATK * ability_multiplier
 
-5.4 Damage as Transformation
+For magical / ranged actions:
 
-“Where waveform meets waveform, a new shape emerges.”
+base_damage = FCS * ability_multiplier
 
-5.5 Corruption Walking Behind
+For DoT / HoT ticks:
 
-“Entropy walks behind all things.”
+tick_value = (FCS * tick_multiplier) ± variance
 
-Corruption steps last in the pipeline.
+Healing:
 
-5.6 Combat Log as Scripture
+heal_amount = VIT * heal_multiplier
 
-“Every strike is written somewhere.”
+Movement / crowd control actions skip this stage.
+
+---
+
+## 5.5 Stage 4 — Modifiers (Buffs/Debuffs)
+
+All active statuses (Section 04) now modify the base values:
+
+- **ATK_UP / ATK_DOWN** → additive  
+- **FCS_UP / FCS_DOWN** → additive  
+- **DEF_UP / DEF_DOWN** → defensive multipliers  
+- **window_expand / window_shrink** → affects Stage 2  
+- **crit_boost / crit_reduce** → affects Stage 2  
+- **corruption_amplify / corruption_resist** → Stage 5  
+- **shield** → Stage 6  
+- **invulnerability** → Stage 6  
+
+Modifiers stack according to their declared stacking mode.
+
+Order of application:
+
+1. Additive modifiers  
+2. Multiplicative modifiers  
+3. Overrides (special states)
+
+This prevents stat overflow and maintains fairness.
+
+---
+
+## 5.6 Stage 5 — Corruption Distortion Layer
+
+Resonantia’s unique identity.
+
+Every action runs a corruption pass:
+
+### Potential distortions:
+
+- value spike (+10–30%)  
+- value dip (−10–30%)  
+- rhythm inversion (GOOD → LATE)  
+- crit corruption (crit becomes “glitch crit”)  
+- status mutation (Bleed → Hemorrhage)  
+- ability twist (changes element type)  
+
+The severity depends on:
+
+actor_corruption_value
+target_corruption_value
+environment_corruption_level
+global_corruption_state
+
+Corruption cannot delete actions — only distort them.
+
+---
+
+## 5.7 Stage 6 — Defense & Mitigation
+
+The target’s defensive systems apply now:
+
+### DEF formula:
+
+damage_after_def = dmg * (100 / (100 + DEF))
+
+### Elemental RES:
+
+elemental_after_res = dmg * (1 - RES_factor)
+
+### Shields:
+
+- Subtract from shield first  
+- Excess goes to HP  
+
+### Invulnerability:
+
+if target.has(invulnerability):
+final_damage = 0
+
+### Guard / Block:
+
+- LATE guard: −20% damage  
+- GOOD guard: −50% damage  
+- PERFECT guard: −80% damage + reflects % back  
+- MISS guard: no mitigation  
+
+---
+
+## 5.8 Stage 7 — Finalization
+
+After all scaling and mitigation:
+
+### Damage:
+
+final_damage = max(1, floor(modified_damage))
+
+### Healing:
+
+final_heal = max(1, floor(modified_heal))
+
+### Status application:
+
+- Chance modified by rhythm quality  
+- Modified by FCS and RHM  
+- Target can resist via RESOLVE  
+
+### Resource gain:
+
+overdrive += base_gain + rhythm_bonus
+
+### Action result packet is constructed:
+
+```jsonc
+{
+  "type": "damage" | "heal" | "status" | "miss",
+  "value": final_value,
+  "source": actor_id,
+  "target": target_id,
+  "rhythm": rhythm_quality,
+  "crit": true|false,
+  "corruption": distortion_info,
+  "metadata": {...}
+}
+This packet is what all other systems read.
+
+5.9 Stage 8 — Propagation to Other Systems
+
+The result packet is sent to:
+
+Animation system
+
+plays the appropriate attack/hit/block animation
+
+Audio system
+
+selects hit SFX
+
+adjusts based on corruption / crit / rhythm
+
+VFX system
+
+hit sparks, glitch bursts, corruption tendrils, etc.
+
+AI system
+
+enemy changes state
+
+reacts to damage or timing
+
+triggers counterbehavior
+
+UI system
+
+damage numbers
+
+status icons
+
+timing feedback
+
+Propagation is read-only:
+No system can rewrite the result packet.
+
+This protects engine integrity.
+
+5.10 Stage 9 — Logging
+
+Every resolved action is written to the Combat Log:
+
+action_id
+
+actor
+
+target
+
+damage/heal values
+
+crit
+
+rhythm
+
+corruption effects
+
+statuses applied
+
+timestamps
+
+Used for:
+
+debugging
+
+analytics
+
+replays
+
+balancing
+
+post-fight analysis
+
+Logs are never authoritative — but they mirror the authoritative engine.
+
+5.11 Resolution Pipeline Integrity Rules
+
+Once an action enters the pipeline, it must complete.
+
+No result can contradict earlier pipeline stages.
+
+Corruption cannot skip Defense or Modifiers.
+
+MISS actions skip directly to Propagation, never dealing damage.
+
+Defensive states always apply before corruption spikes.
+
+Final values must be integers ≥ 1 unless overridden by a special state.
+
+Action packets must be immutable after finalization.
+
+These rules ensure predictable, stable combat.

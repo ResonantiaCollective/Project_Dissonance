@@ -1,230 +1,272 @@
-
----
-# COMBAT ENGINE CODEX v1.0  
-## SECTION 2 — ACTION TYPES & RESOLUTION LAYER
-
-### Technical Layer
-
-The Combat Engine recognizes three **primary** action classes and two **secondary** layers.
+# COMBAT ENGINE CODEX v1  
+## SECTION 02 — ACTION FRAMEWORK
 
 ---
 
-### 2.1 Primary Action Classes
+## 2.0 Purpose of the Action Framework
 
-#### A) Strike Actions
+The **Action Framework** defines how any intention in Resonantia becomes a
+gameplay event.
 
-Direct offensive actions:
+Whenever an Operative attacks, guards, moves, plays a card, or an enemy
+casts an ability, the engine creates an **Action**.
 
-- Light / Heavy attacks
-- Pulse strikes
-- Corruption-infused slashes
-- Ranged resonance shots
+The Action Framework answers:
 
-Key fields:
+- What kinds of actions exist?  
+- How are they represented in data?  
+- In what order do they resolve?  
+- How do timing and rhythm attach to them?
 
-```text
-base_damage
-damage_type          # physical | resonance | corruption
-cast_time
-recovery_time
-beat_sync_behavior   # requires beat? any time?
-status_on_hit
-can_crit
-stagger_on_perfect
-B) Ability Actions
+The Action Framework feeds into the **Resolution Pipeline** (Section 05).
 
-Non-basic actions triggered by:
+---
 
-cards
+## 2.1 Action Types
 
-talent unlocks
+At engine level, all gameplay behaviors are normalized into a small set of
+action types:
 
-Overdrive / Shadow Overdrive
+- **basic_attack**  
+  Standard player or enemy strike. No special resource cost.
 
-boss scripts
+- **ability_cast**  
+  A skill or spell defined in the Ability System (Section 06).
 
-Key fields:
+- **card_play**  
+  A card being activated from the deck / hand.
 
-ability_id
-cooldown_beats
-activation_condition
-beat_tier_bonus
-resource_cost
-corruption_gain
-aoe_shape
-range
-visual_event_id
+- **guard / block**  
+  Defensive timing action that reduces or nullifies incoming damage.
 
-C) Movement Actions
+- **movement**  
+  Position change, dash, sidestep, teleport, etc.
 
-Positioning-related:
+- **system_trigger**  
+  Engine-level actions such as Round Start, Round End, Phase Change.
 
-dodge / dash / slide
+- **status_tick**  
+  Periodic application from an existing status (bleed, regen, burn).
 
-blink / teleport
+- **environmental**  
+  Hazards or zone-based events (spikes, lasers, collapsing tiles).
 
-phase-walk
+Each concrete move in the game maps to one of these types internally.
 
-shadow shift
+---
 
-Key fields:
+## 2.2 Action Lifecycle
 
-invuln_frames
-distance
-direction_mode     # stick / target-lock / camera
-beat_cancel_timing
-flow_scaling       # affects distance and recovery
+Every action follows the same lifecycle:
 
+1. **Create**  
+   - Input or AI decision requests an action.  
+   - Required data is assembled (actor, target, ability id, etc.).
 
-Movement can cancel certain recovery frames depending on Flow.
+2. **Queue**  
+   - Action is placed into the Combat Engine queue for the current beat /
+     frame.
 
-2.2 Secondary Layers
-1) Status Application Layer
+3. **Validate**  
+   - Engine checks:  
+     - Is the actor alive and allowed to act?  
+     - Are resources (energy, cooldown, ammo) available?  
+     - Are targeting rules satisfied?  
+   - If validation fails, the action is discarded with a failure reason.
 
-Statuses may be applied by:
+4. **Bind to Rhythm**  
+   - Timing offset and beat index are attached.  
+   - Quality (PERFECT / GOOD / LATE / MISS) is determined.
 
-strikes
+5. **Resolve**  
+   - The Resolution Pipeline transforms the action into concrete results  
+     (damage, shields, status effects, meters, etc.).
 
-abilities
+6. **Propagate**  
+   - Results are broadcast to:  
+     - Animation system  
+     - Audio system  
+     - VFX  
+     - AI / State machines
 
-triggers
+7. **Log**  
+   - The action and its outcome are written into a combat log for analytics,
+     replays, and debugging.
 
-corruption events
+No action is allowed to bypass this lifecycle.
 
-auras
+---
 
-They are handled by the Status System (Section 4).
+## 2.3 Action Data Model
 
-2) Resource Action Layer
+At minimum, every action shares a common schema.
 
-Every action may modify:
+Example (conceptual):
 
-Energy / stamina
+```jsonc
+Action {
+  id: string,              // unique per action instance
+  type: string,            // basic_attack, ability_cast, etc.
+  actor_id: string,        // who performs the action
+  target_ids: [string],    // one or more targets, may be empty
+  source_position: Vector, // position at action creation
+  target_position: Vector, // aim point or primary target pos
+  ability_id: string|null, // reference into Ability data (if any)
+  card_id: string|null,    // reference into Card data (if any)
+  cost: {
+    energy: int,
+    hp: int,
+    other: object
+  },
+  rhythm: {
+    beat_index: int,       // which beat in the loop
+    offset: float,         // time delta from ideal beat
+    quality: string        // PERFECT, GOOD, LATE, MISS
+  },
+  tags: [string],          // e.g. "melee", "projectile", "finisher"
+  metadata: object         // free-form, for systems to attach context
+}
+Sub-systems (Cards, Abilities, Triggers) extend this structure through
+metadata or additional typed wrappers, but the Combat Engine always
+sees an action in this normalized shape.
 
-Resonance buildup
+2.4 Rhythm Binding
 
-Overdrive bar
+The Action Framework connects directly to the Rhythm system.
 
-Shadow corruption meter
+When an action is queued for the current frame / beat:
 
-Flow rhythm modulation
+The engine queries the rhythm module for:
 
-Enemy corruption_level
+current beat index
 
-Updates happen after damage resolution.
+time since last beat
 
-2.3 Action Execution Timeline
+time until next beat
 
-All actions follow this pattern:
+It computes the offset and classifies timing:
 
-1. Input → Action identification
-2. Beat window evaluation
-3. Pre-hit conditions (range, LOS, resources)
-4. Cast / windup
-5. Hit frame
-6. Damage calculation
-7. Status application
-8. Post-action recovery
-9. Resource adjustments
-10. Combat log event
+|offset| <= perfect_window → PERFECT
 
-2.4 Beat-linked Global Cooldown (GCD)
+|offset| <= good_window → GOOD
 
-Instead of a classic MMO GCD, Resonantia uses a beat-based GCD:
+|offset| <= late_window → LATE
 
-if Flow < FLOW_GCD_THRESHOLD:
-    gcd = 1 beat
-else:
-    gcd = 0.5 beat
+else → MISS
 
+This quality is stored in action.rhythm.quality and is later used by:
 
-This preserves rhythm precision while remaining fluid.
+damage formulas
 
-2.5 Queued Action System
+crit calculations
 
-To avoid input frustration, the system supports one queued action:
+status application chances
 
-stored during cast/recovery/hitstop
+Overdrive gain
 
-executed on the next valid frame that satisfies:
+enemy AI reactions (e.g. DESYNC punishments)
 
-GCD ready
+In this way:
 
-cancel rules satisfied
+No action is “timeless.”
+Every action carries its beat.
 
-Priority of queued actions:
+2.5 Priority & Conflict Resolution
 
-Movement (dodge)
+Multiple actions often occur in the same timestep / beat.
+The Action Framework orders them with a priority system so that
+resolution is deterministic.
 
-Card / Ability
+Each action computes:
 
-Basic Strikes
+priority_layer — broad category, e.g.:
 
-Repeats (spam-protected)
+0: System actions (round start/end, phase change)
 
-2.6 Hitstop & Impact Rhythm
+1: Defensive actions (guard, shield)
 
-Hitstop = small time pause on impact.
+2: Offensive actions (attacks, abilities)
 
-Example tuning:
+3: Status ticks and environmental
 
-Perfect hit: 6 ms + Impact scaling
-Good hit:    3 ms
-Poor hit:    0 ms
-Critical:    +4 ms
-Boss targets: hitstop * 0.5
+initiative_value — fine-grained ordering inside the layer.
+Derived from:
 
+actor speed
 
-Hitstop reinforces:
+action type
 
-feeling of impact
+corruption effects
 
-clarity of timing
+special modifiers
 
-rhythm pattern readability
+Sorting rule:
 
-Lore Layer
-2.1 The Three Movements
+Sort by priority_layer ascending
 
-Scripture mirrors the three primary actions:
+If tie, sort by initiative_value descending
 
-“To strike is to speak.
-To move is to breathe.
-To invoke is to shape the world.”
+If still tied, break by a stable rule (actor id) to keep replays
+consistent.
 
-Strike → speech
+This ensures:
 
-Movement → breath
+System-level changes happen before damage
 
-Ability → reshaping reality
+Guards can apply before incoming strikes
 
-2.2 Beat Windows as Spiritual Timing
+The same situation always produces the same resolution order.
 
-Perfect → The True Tone
+2.6 Failure Modes
 
-Good → The Heard Tone
+Not all actions succeed. The framework defines clear failure reasons
+so other systems can react:
 
-Poor → The Lost Tone
+Common failure codes:
 
-Off-beat → The Broken Tone
+INVALID_TARGET — target dead, out of range, or no longer valid.
 
-2.3 Windup & Recovery
+INSUFFICIENT_RESOURCES — energy, HP, or other cost missing.
 
-Cast time:
+INTERRUPTED — actor was staggered / stunned before resolution.
 
-“Before a blow is struck, purpose is forged.”
+CONFLICT — mutually exclusive action already resolved this tick.
 
-Recovery:
+RULE_BLOCKED — engine-level rule prevents the action (e.g. global
+silence).
 
-“Every act leaves an echo.”
+On failure:
 
-2.4 Queued Actions as Premonition
+No Resolution Pipeline processing occurs.
 
-“The Operative knows their next motion
-before the first concludes.”
+A lightweight failure event is sent instead (for UI feedback,
+sound cues, AI learning).
 
-2.5 GCD as Breath Between Beats
+Because of this, errors do not corrupt combat — they are formalized.
 
-Beat GCD:
+2.7 Integration with Other Systems
 
-“The space where rhythm inhales.”
+The Action Framework connects to other codices as follows:
+
+Player System Codex
+
+Defines how player inputs generate actions and how stats modify
+initiative and priority.
+
+Enemy System Codex
+
+Defines how AI state machines request actions, and how rhythm
+sensitivity impacts their timing.
+
+Ability System (Section 06)
+
+Defines how ability data translates into action parameters (damage,
+range, tags, costs).
+
+Trigger Engine
+
+Listens to actions and their rhythm quality to fire Drops, Peaks,
+and Bass events.
+
+The Combat Engine itself remains agnostic about who created an action.
+It only cares about what the action is and how it should resolve.

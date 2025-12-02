@@ -1,161 +1,321 @@
-
----
-# COMBAT ENGINE CODEX v1.0  
-## SECTION 4 — STATUS EFFECTS & CONDITION SYSTEM
-
-### Technical Layer
-
-Statuses govern buffs, debuffs, DoTs, corruption effects, and control (CC).
-
-All statuses use a unified data structure.
+# COMBAT ENGINE CODEX v1  
+## SECTION 04 — STATUS SYSTEM
 
 ---
 
-### 4.1 Status Data Structure
+## 4.0 Purpose of the Status System
 
-```json
-{
-  "id": "slow",
-  "type": "buff | debuff | dot | corruption | control",
-  "duration_beats": 4,
-  "stacking_rule": "replace | override | accumulate",
-  "tick_behavior": "per_beat | per_second | on_trigger",
-  "modifiers": { }
+The Status System governs all persistent effects that modify an actor over
+time:
+
+- buffs  
+- debuffs  
+- damage-over-time (DoT)  
+- heal-over-time (HoT)  
+- corruption effects  
+- shields  
+- stuns, freezes, fears  
+- rhythm modifiers  
+- conditional triggers  
+
+Status effects are one of the primary bridges between:
+
+- the **Action Framework** (Section 02)
+- **Combat Stats** (Section 03)
+- the **Resolution Pipeline** (Section 05)
+
+Statuses change the rules — temporarily or conditionally.
+
+---
+
+## 4.1 Status Categories
+
+Every status belongs to exactly one of these categories:
+
+### **A) Harmful Statuses**  
+Effects that negatively impact the actor.
+
+Examples:
+- Burn  
+- Bleed  
+- Corruption Spike  
+- Weaken  
+- Armor Break  
+- Rhythm Desync  
+- Fear  
+- Slow  
+- Poison  
+
+---
+
+### **B) Beneficial Statuses**  
+Effects that empower the actor.
+
+Examples:
+- Strength Up  
+- Defense Up  
+- Rhythm Sync  
+- Crit Boost  
+- Regen  
+- Overdrive Surge  
+- Cleanse Aura  
+
+---
+
+### **C) Conditional Modifiers**  
+Statuses that watch for conditions and fire additional actions.
+
+Examples:
+- “Next PERFECT hit deals double damage”  
+- “Next time actor is struck, apply burn”  
+- “If HP drops below 30%, trigger shield”  
+- “On rhythm MISS, reduce SPD for 2s”  
+
+These are the programmable glue of the system.
+
+---
+
+### **D) Special States**  
+Transformation states or hard locks.
+
+Examples:
+- Stun  
+- Freeze  
+- Silence  
+- Shadow Overdrive  
+- Invulnerability  
+- Phase Shift  
+
+Special states override parts of the Action Framework.
+
+---
+
+## 4.2 Status Data Model
+
+Every status effect follows a shared schema so the Combat Engine can treat
+them uniformly.
+
+```jsonc
+Status {
+  id: string,              // unique identifier
+  category: string,        // harmful, beneficial, conditional, special
+  stacks: int,             // current stack count
+  max_stacks: int,         // optional
+  duration: float,         // seconds or beats
+  tick_rate: float,        // how often DoT/HoT ticks occur
+  source_actor: string,    // who applied the status
+  modifiers: object,       // stat or rule modifications
+  flags: [string],         // e.g. "undispellable", "persistent"
+  metadata: object         // custom fields for abilities/cards/scripts
 }
+Statuses may have custom logic, but they must obey this shape.
 
-4.2 Status Categories
+4.3 Tick Logic
 
-Buff
+Tick logic applies to any status with an ongoing effect.
 
-Power Surge, Harmony Blessing, Flow Amplifier, Armor Up…
+Examples:
 
-Debuff
+Bleed → damage tick
 
-Vulnerable, Armor Break, Weakness, Resonance Seal, Disrupted Beat…
+Regen → healing tick
 
-DoT
+Burn → damage tick with variance
 
-Burn (physical), Resonance Bleed, Corruption Rot…
+Corruption Pulse → distortion tick
 
-Corruption
+Rhythm Sync → timing window adjustment tick
 
-Rift Infection, Shadow Leak, Entropy Sickness, Fracture Mark…
+Formula (conceptual):
+on_tick:
+  apply_effect()
+  reduce_duration(tick_rate)
+  if duration <= 0:
+      expire()
+Tick rate can be influenced by SPD or RHYTHM MASTERY (RHM).
 
-Control
+4.4 Stacking Rules
 
-Stun, Root, Snare, Silence, Confusion, Phase Lock, Stagger…
+Statuses stack according to one of three modes:
 
-4.3 Stacking Rules
+1. Additive
 
-replace — new instance replaces old
+Each stack increases power linearly.
+e.g. Bleed dealing +2 damage per stack.
 
-override — stronger replaces weaker
+2. Multiplicative
 
-accumulate — numeric accumulation
+Stacks amplify the effect exponentially.
+Used sparingly for powerful mechanics.
 
-Example (accumulate):
-Burn stack 1 → 3 dmg / beat  
-Burn stack 2 → 6 dmg / beat  
-Burn stack 3 → 9 dmg / beat
+3. Refresh
 
-4.4 Duration Model
+Effect does not stack — duration resets instead.
 
-Most statuses use beat-based durations:
-duration_beats = 4
-tick_behavior  = per_beat
-Corruption Rot may be per-second for entropy flavor.
+Examples:
 
-4.5 Rhythm-linked Behavior
+Poison → additive
 
-Beat quality can modify status:
-Perfect: double duration or strength
-Good:    normal
-Poor:    reduced
-Offbeat: may invert or interact with Dissonance
+Harmony Sync → refresh
 
-4.6 Trigger-linked Behavior
+Weaken → multiplicative
 
-Triggers (Drop, Peak, Bass) can:
+Burn → additive
 
-apply statuses
+Slow → refresh
 
-evolve existing ones
+Stacking rules prevent status effects from spiraling out of control.
 
-cleanse or nullify them
+4.5 Status Modifiers
+
+Statuses modify actor stats or engine rules.
+
+Common modifiers include:
+
+ATK_UP / ATK_DOWN
+
+DEF_UP / DEF_DOWN
+
+FCS_UP / FCS_DOWN
+
+SPD_UP / SPD_DOWN
+
+RHM_UP / RHM_DOWN
+
+Special modifiers:
+
+window_expand (rhythm GOOD/PERFECT enlarged)
+
+window_shrink
+
+crit_boost
+
+corruption_amplify
+
+damage_redirection
+
+shield
+
+invulnerability
+
+stun_lock
+
+Modifiers follow:
+
+additive stacking
+
+multiplicative stacking
+
+exclusive overrides (for special states)
+
+4.6 Status Interaction with Rhythm
+
+Statuses can modify rhythm, or be triggered by rhythm.
+
+Examples:
+
+Burn → stronger on LATE attacks
+
+Rhythm Sync → bigger PERFECT window
+
+Desync → harsher MISS penalties
+
+Drop Fever → massive crit bonus on PERFECT
+
+Bass Resonance → shield pulses on alternating beats
+
+Statuses and timing interact constantly — this is a core identity of the game.
+
+4.7 Status Interaction with Corruption
+
+Corruption is the wild variable of the status system.
+
+Examples of corruption-driven behavior:
+
+Bleed ticks may glitch and hit twice
+
+DEF buffs may fracture (stop working)
+
+RHM buffs may invert (shrink timing windows)
+
+Burn may spike into “Abyss Burn”
+
+Fear may escalate into “Panic”
+
+Poison may mutate into “Corrosion”
+
+Corruption never replaces a status — it distorts it.
+
+4.8 Status Expiration
+
+When a status reaches duration 0, it expires cleanly:
+
+Remove modifiers
+
+Remove flags
+
+Trigger any “on_expire” effects
+
+Clear from actor status list
+
+Statuses must never linger after expiration.
+This is a rule enforced to prevent “ghost statuses.”
+
+4.9 Status Priority
+
+When multiple statuses apply at once, priority is:
+
+Special States
+
+Beneficial Buffs
+
+Harmful Debuffs
+
+Conditional Modifiers
+
+This determines which modifiers override or persist.
 
 Example:
+Invulnerability (special state) always overrides damage ticks.
 
-Drop → “Fury Mark” (damage up)
+4.10 Cleansing & Immunity
 
-Peak → “Phase Overload” (boss phase shift)
+Actors may have:
 
-Bass → “Pulse Armor” (armor up)
+partial cleanses
 
-4.7 Corruption Status Interactions
+full cleanses
 
-Corruption stacks may:
+status-specific immunities
 
-increase entropy damage
+corruption immune phases
 
-push towards Shadowborn state
+lockouts (cannot receive certain buffs/debuffs)
 
-invert rhythms
+Cleanses remove:
 
-Example:
-entropy_mult = 1 + (Dissonance * 0.05)
-if corruption_units >= 100:
-    enter_shadow_state()
+harmful statuses
 
-4.8 Dispel Types
+conditional modifiers
 
-Cleanse → removes debuffs & DoTs
+Special states can be immune or partially immune.
 
-Purify → removes corruption statuses
+4.11 Status System Integrity Rules
 
-Nullify → removes buffs / positive statuses
+To maintain stability, the Status System follows these laws:
 
-4.9 Godot Implementation (StatusController)
+Status effects must not stack infinitely.
 
-A dedicated component:
-StatusController.gd
-├ apply_status()
-├ remove_status()
-├ tick_statuses()
-├ calculate_modifiers()
-├ serialize_statuses()
-└ sync_to_combat_log()
-Tick driven by BeatBus events.
+Special states override buffs/debuffs unless explicitly allowed.
 
-Lore Layer
+Corruption cannot delete a status — only distort.
 
-4.1 Status as Echo Imprints
+Duration cannot go negative.
 
-“A status is a memory etched into a being’s waveform.”
+Status resolution cannot break Action order.
 
-Buffs = blessings of Pulse
-Debuffs = fractures of rhythm
-Corruption = whisper of the Rift
+Expired statuses must immediately disappear.
 
-4.2 Three Forms of Harm
+Tick logic must never produce recursive actions (infinite loops).
 
-Harm of Flesh → physical
-
-Harm of Tone → resonance
-
-Harm of Void → corruption
-
-4.3 Control as Spiritual Paralysis
-
-“When the inner beat falters, the body forgets to move.”
-
-4.4 Triggers as Heavenly Decrees
-
-Drops / Peaks / Bass are omens in scripture; statuses shifting with them reflects divine influence.
-
-4.5 Corruption as Entropy Truth
-
-“Entropy is the honesty of broken things.”
-
-4.6 Dispel as Purification
-
-“To cleanse is to return to the first tone.”
+These rules are mandatory to prevent engine instability.

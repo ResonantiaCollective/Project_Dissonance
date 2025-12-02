@@ -1,142 +1,337 @@
-# COMBAT ENGINE CODEX v1.0  
-## SECTION 6 — ABILITY SYSTEM (PLAYER & ENEMY)
-
-### Technical Layer
-
-The Ability System unifies advanced actions for both Player and Enemy.
-
-Abilities are:
-
-- data-driven
-- rhythm-aware
-- trigger-reactive
-- corruption-capable
+# COMBAT ENGINE CODEX v1  
+## SECTION 06 — ABILITY SYSTEM  
+*Identity → Action → Power*
 
 ---
 
-### 6.1 Ability Categories
+## 6.0 Purpose of the Ability System
 
-- **Strike Abilities** — enhanced attacks
-- **Resonance Abilities** — harmonic skills
-- **Corruption Abilities** — entropy powers
-- **Support Abilities** — heals, shields, buffs
-- **Control Abilities** — stuns, roots, silence, etc.
-- **Ultimate / Overdrive Abilities** — large-impact skills gated by Overdrive or Shadow Overdrive
+The Ability System defines how special actions behave:
+
+- Player skills  
+- Enemy skills  
+- Card abilities  
+- Passive triggers  
+- Transformations  
+- Overdrive / Shadow Overdrive abilities  
+
+Abilities are **rule sets** layered on top of the Action Framework.
+
+Every ability:
+
+1. Generates an action  
+2. Passes through the Resolution Pipeline  
+3. Creates outcome packets  
+4. Integrates cleanly with rhythm and corruption
 
 ---
 
-### 6.2 Ability Data Structure
+## 6.1 Ability Categories
 
-```json
-{
-  "id": "pulse_strike",
-  "type": "strike",
-  "cast_time": 0.3,
-  "recovery": 0.2,
-  "cooldown_beats": 4,
-  "resource_cost": 20,
-  "beat_behavior": "perfect | good | poor | offbeat | any",
-  "trigger_variant": {
-    "drop": "pulse_strike_plus",
-    "peak": "pulse_strike_overdrive"
+### **A) Offensive Abilities**
+Directly cause damage or apply harmful statuses.
+
+Examples:
+- Sonic Slash  
+- Pulse Burst  
+- Glitch Lance  
+- Burning Rift  
+- Corrosion Needle  
+- Frequency Shot  
+
+---
+
+### **B) Defensive Abilities**
+Mitigate, shield, or cleanse.
+
+Examples:
+- Barrier Field  
+- Rhythm Guard  
+- Cleanse Pulse  
+- Harmonic Shell  
+- Resonant Shield  
+
+---
+
+### **C) Utility Abilities**
+Movement, repositioning, setup, resource manipulation.
+
+Examples:
+- Phase Step  
+- Void Dash  
+- Drop Amplifier  
+- Bass Anchor  
+- Overdrive Convert  
+
+---
+
+### **D) Special / Transformative Abilities**
+Shift the rules temporarily.
+
+Examples:
+- Shadow Overdrive  
+- Pulse Ascension  
+- Fearbreak  
+- Corruption Surge  
+- Time Fracture  
+
+These often introduce temporary abilities or statuses.
+
+---
+
+## 6.2 Ability Data Model
+
+All abilities use a shared schema to ensure compatibility with the engine:
+
+```jsonc
+Ability {
+  id: string,
+  name: string,
+  category: string,            // offensive, defensive, utility, special
+  description: string,
+  ability_type: string,        // projectile, melee, ranged, aura, etc.
+  cost: {
+    energy: int,
+    hp: int,
+    cooldown: float
   },
-  "corruption_variant": "shadow_pulse_strike",
-  "effects": {
-  
-    "damage": 40,
-    "type": "resonance",
-    "status": "stagger",
-    "aoe_radius": 1.5
-  }
+  base_scaling: {
+    stat: string,              // ATK, FCS, VIT
+    multiplier: float
+  },
+  range: float,
+  area: object|null,           // cones, circles, rays
+  statuses_applied: [string],  // references Status IDs
+  rhythm_affinity: string,     // perfect/good/late scaling bias
+  corruption_affinity: string, // how corruption distorts the ability
+  tags: [string],              // e.g., "bleed", "fire", "burst", "drop"
+  metadata: object             // free-form for scripting
 }
+Even complex abilities break down into this structure.
 
-6.3 Ability Scaling
+6.3 Ability Lifecycle
+Abilities follow a lifecycle inside the Combat Engine:
 
-Abilities scale with combat stats:
-damage = base * (1 + Impact * 0.01)
-damage *= beat_multiplier_from_Harmony
-damage *= corruption_multiplier_from_Dissonance
-recovery *= (1 - Flow * 0.004)
+Select
+Player presses button / Enemy AI chooses
 
-6.4 Trigger Variants
+Validate
+Resources, cooldowns, states
 
-Abilities may transform when a Trigger is active:
+Generate Action
+Using the Action Framework
 
-Drop: damage / speed up
+Bind to Rhythm
+Makes the ability timing-sensitive
 
-Peak: evolve into more complex variant
+Resolve
+Uses Resolution Pipeline (damage, healing, statuses, etc.)
 
-Bass: gain defensive / shockwave effects
+Finalize & Propagate
+Ability effects are sent to VFX/SFX/AI/UI
 
-Mapped via trigger_variant field.
+Cooldown/Aura Management
+Modify or set cooldown timers, durations, aura state
 
-6.5 Corruption Variants
+No ability bypasses this sequence.
 
-At high corruption or in Shadow Overdrive, abilities may:
+6.4 Scaling Rules
+Primary Scaling
+Matches the stat chosen in base_scaling.stat.
 
-convert damage type to corruption
+Examples:
 
-increase AoE / range
+ini
+Copy code
+damage = ATK * multiplier
+damage = FCS * multiplier
+healing = VIT * multiplier
+Secondary Scaling
+Some abilities scale with:
 
-change beat behavior (off-beat bonuses)
+SPD (projectile speed or tick frequency)
 
-reduce cast time
+RHM (timing forgiveness)
 
-6.6 Cast & Recovery Frames
+RESOLVE (resistance / immunity effects)
 
-Ability lifespan:
-cast_start → hit_frame → recovery → finish
+Secondary scaling provides advanced tuning.
 
-Flow stat reduces cast and recovery durations.
+6.5 Rhythm Affinity
+Each ability has a rhythm_affinity that changes how it responds to rhythm.
 
-6.8 Godot Implementation (AbilityRunner)
+Example values:
 
-Core script:
-AbilityRunner.gd
-├ load_ability_data()
-├ apply_variants()        # trigger + corruption
-├ handle_cast_time()
-├ trigger_hit_event()
-├ apply_statuses()
-├ finalize_cooldown()
-└ log_event()
+precision → large boost on PERFECT
 
-Lore Layer
+flex → even bonuses across GOOD/PERFECT
 
-6.1 Abilities as Words of Power
+chaos → benefits from LATE
 
-“To invoke is to shape the world with intention.”
+null → rhythm determines crit only
 
-Abilities are described as:
+Example:
 
-Words of Resonance
+nginx
+Copy code
+if rhythm_affinity == "precision" and rhythm_quality == PERFECT:
+    damage *= 1.35
+Abilities can invert quality under corruption.
 
-Whispers of Corruption
+6.6 Corruption Affinity
+Abilities can behave wildly under corruption.
 
-Shouts of Pulse
+Examples:
 
-6.2 Trigger Variants as Divine Reactions
+“Glitch” → may fire twice
 
-Drop → war command
+“Void” → changes damage element
 
-Peak → revelation
+“Chaos” → damage oscillates heavily
 
-Bass → heartbeat of the world
+“Stable” → lower corruption impact
 
-6.3 Corruption Variants as Forbidden Forms
+“Reactive” → triggers corruption-based effects
 
-“Power bends in the presence of the Rift.”
+This affinity is read in Stage 5 of the Resolution Pipeline.
 
-6.4 Cast & Recovery as Breath & Echo
+6.7 Cooldowns
+Cooldowns are tracked per ability instance:
 
-Cast:
+start on ability use
 
-“The breath drawn before a name is spoken.”
+modified by:
 
-Recovery:
+SPEED
 
-“The echo that follows intention.”
+statuses
 
-6.5 Ultimate Abilities as True Names
+corruption
 
-Overdrive abilities are described as revealing fragments of the Operative’s True Name.
+minimum cooldown (safety limit)
+
+maximum cooldown (rare, for transformations)
+
+Cooldown formula (example):
+
+ini
+Copy code
+effective_cd = base_cd * (100 / (100 + SPD))
+Cooldowns never drop below 10% of their base unless a special mechanic overrides.
+
+6.8 Area & Targeting Rules
+Abilities define:
+
+single target
+
+multi-target
+
+area-of-effect
+
+ground-target
+
+directional cone
+
+piercing ray
+
+self-only
+
+The Ability System handles intention,
+the Combat Engine handles resolution.
+
+Example:
+
+go
+Copy code
+if ability.area.type == "cone":
+    targets = actors_in_cone(actor, target_position, area_angle, area_range)
+6.9 Status Application Rules
+Statuses applied by abilities reference the Status System:
+
+Multiple statuses can apply
+
+Chance modified by FCS and rhythm quality
+
+Target can resist via RESOLVE
+
+Corruption mutates statuses into variants
+
+Example:
+
+makefile
+Copy code
+bleed_chance = ability_base_chance + (FCS * 0.1)
+if rhythm_quality == PERFECT:
+    bleed_chance += 10%
+6.10 Special / Transformative Abilities
+These abilities temporarily override game rules.
+
+Examples:
+
+Shadow Overdrive
+massively boosts SPD, FCS
+
+shrinks LATE window
+
+increases corruption interactions
+
+applies corruption aura status
+
+replaces basic attack with corrupted variant
+
+Pulse Ascension
+expands PERFECT window
+
+boosts crit chance
+
+generates rhythm sync status
+
+grants temporary invulnerability on PERFECT guard
+
+All special abilities are implemented using:
+
+one or more statuses
+
+modified cooldown rules
+
+conditional triggers
+
+scripted metadata
+
+6.11 Ability Failure Modes
+Abilities can fail early due to:
+
+insufficient resources
+
+invalid target
+
+actor stunned / frozen
+
+conflict with another action
+
+corruption backlash
+
+Failures return a result packet with:
+
+vbnet
+Copy code
+type: "ability_fail"
+reason: "INVALID_TARGET" | "INSUFFICIENT_RESOURCES" | ...
+No other pipeline stages execute.
+
+6.12 Ability System Integrity Rules
+Abilities must always map to an Action Framework type.
+
+Abilities cannot bypass cooldown rules.
+
+Special abilities must use statuses, not engine hacks.
+
+Damage formulas must use Resolution Pipeline stages.
+
+Rhythm affinity must never create infinite crit loops.
+
+Corruption affinity must never bypass defense entirely.
+
+Cooldowns must remain deterministic after replays.
+
+These keep the Ability System clean, stable, and future-proof.

@@ -1,256 +1,384 @@
-# COMBAT ENGINE CODEX v1.0  
-## SECTION 8 — DAMAGE TYPES, CRITICALS & MULTIPLIER SYSTEM
+# COMBAT ENGINE CODEX v1  
+## SECTION 08 — DAMAGE SYSTEM  
+*Power → Impact → Consequence*
 
 ---
 
-## Technical Layer
+## 8.0 Purpose of the Damage System
 
-The damage system defines how all types of harm are calculated, modified, mitigated, and delivered.  
-It integrates stats (Impact, Harmony, Dissonance, Flow), statuses, corruption, triggers, armor, resistances, crits, and rhythm windows into one deterministic pipeline.
+The **Damage System** is responsible for turning numerical outputs from the
+Resolution Pipeline into:
 
----
+- HP loss  
+- HP gain  
+- shield changes  
+- status interactions  
+- corruption fluctuations  
+- rhythm-based bonuses  
+- hit reactions  
 
-# 8.1 Damage Types (Three Harm Principles)
+This section defines the mathematical and logical rules that govern all
+damage, healing, and hybrid effects.
 
-Resonantia uses **three core forms of damage**:
-
-1. **Physical Damage**
-   - mitigated by armor
-   - affected by Impact
-   - influenced by stagger & knockback logic
-
-2. **Resonance Damage**
-   - bypasses armor
-   - mitigated by resonance resistance
-   - scales strongly with Harmony
-   - gains bonuses from Perfect / Good beats
-
-3. **Corruption Damage**
-   - partially ignores all resistances
-   - enhanced by Dissonance
-   - interacts with corruption_level
-   - may invert rhythm effects (off-beat bonus)
+Nothing bypasses the Damage System.
 
 ---
 
-# 8.2 Damage Resolution Order
+## 8.1 Damage Types
 
-Damage follows this exact sequence:
+There are **8 core damage types**, each with unique properties.
 
-```text
-1. Determine base damage (strike/ability)
-2. Apply Impact scaling
-3. Apply Harmony (beat window) multiplier
-4. Apply damage type (physical/resonance/corruption) logic
-5. Apply armor (for physical only)
-6. Apply resistance (per damage type)
-7. Apply Dissonance multipliers (off-beat, corruption)
-8. Apply buffs / debuffs
-9. Apply crit (if triggered)
-10. Apply Shadowborn modifiers (if active)
-11. Clamp, round, finalize
-Every hit uses this order.
-Nothing skips steps unless explicitly defined.
+### **1. Physical**
+Basic melee/ranged neutral hits.
 
-8.3 Base Damage Calculation
-Base damage is defined per action:
+Affected by:
+- ATK  
+- DEF  
+- armor break  
+- guard timing  
 
-text
+---
+
+### **2. Sonic**
+Frequency-based vibration damage.
+
+Affected by:
+- FCS  
+- RES (sonic)  
+- rhythm quality  
+- corruption vibration spikes  
+
+---
+
+### **3. Fire**
+Heat/burn effects.
+
+Properties:
+- applies Burn DoT  
+- corruption can mutate into Abyss Fire  
+- DEF effective, RES(Fire) applies  
+
+---
+
+### **4. Glitch**
+Data-corruptive energy.
+
+Properties:
+- causes unstable damage variance  
+- may duplicate under corruption  
+- bypasses part of DEF  
+- resisted by RES(Glitch)  
+
+---
+
+### **5. Void**
+Spatial disintegration.
+
+Properties:
+- ignores 50% of DEF  
+- heavy corruption interactions  
+- enemies in unstable states take bonus damage  
+
+---
+
+### **6. Corruption**
+Pure corruption damage.
+
+Properties:
+- ignores DEF  
+- ignores RES(Fire/Sonic/etc)  
+- resisted only by RESOLVE  
+- may warp statuses on hit  
+- increases local corruption environment  
+
+---
+
+### **7. True Damage**
+Absolute damage unaffected by defenses.
+
+Properties:
+- ignores DEF  
+- ignores RES  
+- ignores buffs/debuffs  
+- cannot be crit  
+- cannot be corrupted or rhythm-modified  
+
+Used sparingly.
+
+---
+
+### **8. Healing (inverse damage)**
+Restores HP.
+
+Properties:
+- uses VIT scaling  
+- can be affected by corruption (healing inversion)  
+- can be rhythm-modified (PERFECT heals can crit-heal)
+
+---
+
+## 8.2 Critical Hits
+
+Critical hits occur during Stage 2 and Stage 4 scaling.
+
+Base calculation:
+
+crit_chance = (FCS * 0.5%) + bonuses
+crit_damage = 150% + (FCS * 0.2%)
+
+makefile
 Copy code
-base_damage = action.base_damage
-For abilities, base_damage may be modified by:
 
-charge time
+Rhythm:
 
-trigger variant
+PERFECT → +15% crit chance
+GOOD → +5%
+LATE → +0%
+MISS → crit chance = 0
 
-corruption variant
-
-ability scaling rules
-
-8.4 Impact Scaling
-ini
-Copy code
-impact_factor = 1 + (Impact / 100)
-step1 = base_damage * impact_factor
-Impact always applies first after base.
-
-8.5 Beat Window Multiplier (Harmony)
 yaml
 Copy code
-if perfect: step2 = step1 * (1 + Harmony * 0.02)
-elif good:  step2 = step1 * (1 + Harmony * 0.01)
-elif poor:  step2 = step1 * 1.0
-else:       step2 = step1 * (0.8 - Harmony * 0.003)
-Beat quality matters more than any other modifier.
 
-8.6 Damage-Type Behavior
-8.6.1 Physical Damage
-lua
+Corruption may cause:
+
+- Glitch Crit (duplication)
+- Abyss Crit (void conversion)
+- Corrupted Crit (negative healing)
+
+---
+
+## 8.3 Damage Formula Overview
+
+### General flow:
+
+base_damage
+→ rhythm scaling
+→ stat scaling
+→ buffs/debuffs
+→ corruption distortion
+→ defense calculations
+→ shielding
+→ final damage
+→ HP modification
+
+yaml
 Copy code
-phys_after = max(step2 - armor, step2 * 0.10)
-phys_after *= (1 - physical_resistance)
-Min 10% penetration ensures slow attacks still matter.
 
-8.6.2 Resonance Damage
-ini
+---
+
+## 8.4 Defense Interactions
+
+### Physical:
+
+final = dmg * (100 / (100 + DEF))
+
+yaml
 Copy code
-res_after = step2 * (1 - resonance_resistance)
-Ignores armor entirely.
 
-Gains additional penetration from Harmony:
+---
 
-nginx
+### Elemental / Sonic / Fire / Glitch:
+
+final = dmg * (1 - RES_element)
+
+yaml
 Copy code
-res_after *= (1 + Harmony * 0.0035)
 
-8.6.3 Corruption Damage
-Corruption partially ignores protections:
+---
 
-ini
+### Void:
+
+final = dmg * 0.75 // ignores 25% mitigation
+
+java
 Copy code
-eff_resistance = resistance * 0.4
-corrupt_after = step2 * (1 - eff_resistance)
-Dissonance amplifies corruption:
 
-nginx
+Advanced void variant (boss attacks):
+
+final = dmg * (1 - (DEF * 0.25 / (100 + DEF)))
+
+yaml
 Copy code
-corrupt_after *= (1 + Dissonance * 0.03)
-If target is Shadow-corrupted:
 
-nginx
+---
+
+### Corruption:
+
+final = dmg * (1 - (RESOLVE * 0.01))
+
+yaml
 Copy code
-corrupt_after *= 1.15
-8.7 Final Resistance Step
-After type-handling:
 
-ini
+Corruption is extremely dangerous—RESOLVE is the only countermeasure.
+
+---
+
+### True Damage:
+
+final = dmg // no mitigation
+
+yaml
 Copy code
-step3 = damage_after_type
-step4 = step3 * (1 - final_resistance)
-final_resistance depends on the type.
 
-8.8 Dissonance Multipliers
-If hit was Off-Beat:
+---
 
-ini
+## 8.5 Damage-over-Time (DoT)
+
+DoTs tick using:
+
+- tick_rate (from status)  
+- FCS / SPD influences  
+- corruption variance  
+- rhythm at first application  
+
+Example tick formula:
+
+tick_damage = (base_damage * tick_multiplier) ± corruption_variance
+
+yaml
 Copy code
-step5 = step4 * (1 + Dissonance * 0.02)
-If attacker is corrupted:
 
-markdown
+DoTs never crit unless explicitly defined.
+
+If corruption mutates a DoT (e.g., Bleed → Hemorrhage), tick rules change.
+
+---
+
+## 8.6 Hybrid Damage
+
+Some abilities deal multiple types at once:
+
+50% physical
+50% fire
+
+makefile
 Copy code
-step5 *= (1 + corruption_level * 0.004)
-If Shadow Overdrive active:
 
-markdown
+Or:
+
+70% sonic
+30% glitch
+
+yaml
 Copy code
-step5 *= (1 + Dissonance * 0.04)
-8.9 Buffs & Debuffs
-All buffs/debuffs are multiplicative:
 
-ini
+Each portion is resolved separately, then summed.
+
+Hybrid rules allow rich build expression.
+
+---
+
+## 8.7 Shields
+
+Shields absorb damage before HP.
+
+Rules:
+
+- flows through entire pipeline  
+- final damage subtracts from shield first  
+- if shield >= damage: no HP loss  
+- if shield < damage: excess spills to HP  
+- corruption can fracture shields (reduce shield value)  
+
+Shield formula:
+
+remaining_damage = max(0, final_damage - shield_value)
+
+yaml
 Copy code
-step6 = step5 * buff_mult * debuff_mult
-Examples:
 
-Vulnerable: ×1.15
+---
 
-Armor Break: armor reduced before calc
+## 8.8 Lifesteal, Absorption & Reflection
 
-Power Surge: ×1.10
+### Lifesteal:
 
-8.10 Critical Hits
-Crit chance is computed after all previous layers.
+heal = final_damage * lifesteal_percent
 
-cpp
+yaml
 Copy code
-if rand() < crit_chance:
-    step7 = step6 * crit_multiplier
-else:
-    step7 = step6
-Beat interactions:
 
-Perfect Beat → guarantees crit if Harmony ≥ 80
+Rhythm bonuses apply, corruption may invert heal → self-damage.
 
-Off-beat → crit chance boosted by Dissonance
+---
 
-Bosses may have crit resistance.
+### Absorption:
 
-8.11 Shadowborn Modifiers
-Shadowborn enemies (or players in Shadow Overdrive) apply:
+Actor converts incoming damage into resource (Overdrive).
 
-ini
+overdrive += final_damage * absorb_ratio
+
+yaml
 Copy code
-step8 = step7 * 1.10     # universal amplification
-Shadowborn bosses override this with custom tables.
 
-8.12 Rounding & Clamping
-Final damage:
+---
 
-ini
+### Reflection:
+
+Part of incoming damage reflects back to attacker.
+
+reflected = final_damage * reflect_ratio
+
+yaml
 Copy code
-total_damage = clamp(round(step8), 1, max_value)
-Never less than 1 unless absorbed.
 
-8.13 Godot Implementation Outline
-Damage pipeline script:
+Reflection occurs *after* mitigation but *before* shields.
 
-scss
+---
+
+## 8.9 Healing Rules
+
+Healing uses VIT scaling:
+
+heal_amount = VIT * heal_multiplier
+
+yaml
 Copy code
-DamageEngine.gd
-├ calculate_base()
-├ apply_impact()
-├ apply_harmony()
-├ apply_damage_type()
-├ apply_resistance()
-├ apply_dissonance()
-├ apply_status_modifiers()
-├ apply_crit()
-├ apply_shadowborn()
-└ finalize()
-Modular, unit-testable, deterministic.
 
-Lore Layer
-8.1 Three Harm Principles
-Scripture names the three damage types as:
+Rhythm influences:
 
-Harm of Flesh → physical
+PERFECT → +20% heal
+GOOD → +10%
+LATE → -10%
+MISS → no heal
 
-Harm of Tone → resonance
+yaml
+Copy code
 
-Harm of Void → corruption
+Corruption interactions:
 
-Each represents a different way reality can be wounded.
+- heal may invert into damage  
+- heal may glitch (double heal)  
+- heal may apply corruption to target  
 
-8.2 Beat Determines Fate
-“The tone of the strike matters more than its weight.”
+Anti-heal:
 
-Perfect Beats are described as moments where the Operative’s soul aligns with creation.
+- reduces healing received  
+- can invert healing on targets with high corruption
 
-8.3 Armor & Resistance as Spiritual Shells
-Armor represents memory.
-Resistance represents alignment of frequency.
+---
 
-“A being resists only what it understands.”
+## 8.10 Damage Integrity Rules
 
-8.4 Corruption Wounds as Truth
-Corruption doesn’t just harm — it reveals flaws.
+To keep combat consistent and fair:
 
-“Entropy is the truth behind all illusions of form.”
+1. Final damage must never be negative.  
+2. True damage cannot be blocked, resisted, or corrupted.  
+3. Crits must apply before defense, never after.  
+4. Shield absorption must never heal or give resources unless stated.  
+5. DoT ticks must not crit unless explicitly tagged.  
+6. Hybrid damage types must each apply their own rules.  
+7. Corruption cannot skip mitigation unless explicitly defined.  
+8. Rhythm cannot multiply final damage beyond safe caps.  
+9. Healing-inversion cannot kill an actor at 1 HP unless defined.  
+10. Reflection cannot reflect reflection (no loops).  
+11. All final values must be integers ≥ 1 unless overridden.
 
-Shadowborn creatures are said to be:
+These rules protect engine integrity and prevent degenerate builds.
 
-“Too honest for the world around them.”
+---
 
-8.5 Critical Hits as Divine Precision
-Crits are described as:
+*SECTION 08 ends here.*  
+**COMBAT ENGINE CODEX v1.0 — COMPLETE.**
 
-“Moments when the universe blinks.”
-
-Perfect Beats guaranteeing crits at high Harmony reflect true cosmic alignment.
-
-8.6 Shadowborn Power
-Shadowborn amplification is explained as:
-
-“A reflection striking back harder than the hand.”
+Awaiting Operative confirmation before closing the Combat Engine Codex and updating the `COMBAT_INDEX.md` accordingly.
