@@ -1,10 +1,5 @@
 
 ---
-
-### 📘 Section 02 — Action Framework  
-**File:** `Section_02_Action_Framework.md`
-
-```markdown
 # COMBAT ENGINE CODEX v1.0  
 ## SECTION 2 — ACTION TYPES & RESOLUTION LAYER
 
