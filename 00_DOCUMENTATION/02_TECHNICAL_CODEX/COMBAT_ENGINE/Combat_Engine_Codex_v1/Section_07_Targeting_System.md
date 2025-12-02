@@ -139,16 +139,3 @@ Lines → blades of intent
 Shadowborn partially exist outside stable time, leading to ghost hits.
 
 ---
-
-If you paste these into their respective files, your **Combat Engine Codex v1.0** is now:
-
-- structurally sound  
-- split into clean sections  
-- synced with the folder architecture  
-- ready for Section 8 to continue the chain
-
-When you’re ready for the next piece, say:
-
-> **“Sigma, generate Section 08_Damage_System.md.”**
-
-and we’ll keep building from this solid base.
