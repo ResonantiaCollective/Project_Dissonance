@@ -14,10 +14,13 @@ extends Node2D
 @onready var round_label: Label = $RoundLabel
 
 var spectrum: AudioEffectSpectrumAnalyzerInstance = null
+var spectrum_retry_cooldown_left: float = 0.0
+const SPECTRUM_RETRY_INTERVAL := 0.5
 var beat_threshold: float = 0.05
 var beat_state: bool = false
 
 var debug_timer: float = 0.0
+var debug_enabled: bool = false
 var pulse_strength: float = 0.0
 var pulse_decay: float = 5.0
 
@@ -37,7 +40,6 @@ var last_beat_time: float = -1.0
 const PERFECT_WINDOW := 0.03
 const GOOD_WINDOW := 0.09
 
-var beat_count: int = 0
 const ENEMY_NORMAL_ATTACK_BEATS := 8
 const ENEMY_ALERT_ATTACK_BEATS := 6
 
@@ -46,6 +48,9 @@ var enemy_alert: bool = false
 var enemy_alert_beats_left: int = 0
 const ENEMY_ALERT_BEATS := 2
 const ENEMY_ALERT_DAMAGE_BONUS := 1
+var beats_since_last_attack: int = 0
+var warned_missing_spectrum_bus: bool = false
+var warned_missing_spectrum_effect: bool = false
 
 # SURGE ability state
 var surge_ready: bool = true
@@ -66,15 +71,10 @@ var guard_window_left: float = 0.0
 const GUARD_WINDOW_DURATION := 0.25  # seconds
 
 func _ready() -> void:
-	print("Resonantia — Duel + SURGE + Enemy Patterns + Rounds + Guard online.")
-
-	var bus_index := AudioServer.get_bus_index("Spectrum")
-	if bus_index != -1:
-		spectrum = AudioServer.get_bus_effect_instance(bus_index, 0)
-		if spectrum == null:
-			push_error("SpectrumAnalyzer instance is null. Check Spectrum bus.")
+	print("Resonantia - Duel + SURGE + Enemy Patterns + Rounds + Guard online.")
 
 	audio_player.play()
+	_ensure_spectrum_available()
 
 	_reset_pulse()
 	_reset_duel_visuals()
@@ -84,8 +84,7 @@ func _ready() -> void:
 	surge_cd_left = 0.0
 	surge_active_left = 0.0
 
-	enemy_alert = false
-	enemy_alert_beats_left = 0
+	_set_enemy_alert(false, 0)
 
 	guard_active = false
 	guard_perfect = false
@@ -102,15 +101,21 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if spectrum == null:
-		label.text = "NO SPECTRUM"
-		return
+		if spectrum_retry_cooldown_left > 0.0:
+			spectrum_retry_cooldown_left = max(spectrum_retry_cooldown_left - delta, 0.0)
+		else:
+			_ensure_spectrum_available()
+			spectrum_retry_cooldown_left = SPECTRUM_RETRY_INTERVAL
+		if spectrum == null:
+			label.text = "NO SPECTRUM"
+			return
 
 	debug_timer += delta
 
 	var vec: Vector2 = spectrum.get_magnitude_for_frequency_range(500.0, 3000.0)
 	var energy := vec.length()
 
-	if debug_timer > 0.3:
+	if debug_enabled and debug_timer > 0.3:
 		print("Energy:", energy)
 		debug_timer = 0.0
 
@@ -186,19 +191,18 @@ func _on_beat_pulse() -> void:
 	if not enemy_alive or not player_alive:
 		return
 
-	beat_count += 1
-
 	# handle alert beat countdown
 	if enemy_alert:
 		enemy_alert_beats_left -= 1
 		if enemy_alert_beats_left <= 0:
 			enemy_alert_beats_left = 0
-			enemy_alert = false
-			_update_enemy_alert_visual()
+			_set_enemy_alert(false, 0)
 
 	var attack_interval := ENEMY_ALERT_ATTACK_BEATS if enemy_alert else ENEMY_NORMAL_ATTACK_BEATS
 
-	if beat_count % attack_interval == 0:
+	beats_since_last_attack += 1
+	if beats_since_last_attack >= attack_interval:
+		beats_since_last_attack = 0
 		_enemy_attack_player(1)
 
 func _classify_timing() -> String:
@@ -238,8 +242,7 @@ func _calculate_damage(base: int, perfect_mult: float, timing: String) -> int:
 
 	# PERFECT during alert breaks the alert
 	if timing == "PERFECT" and enemy_alert:
-		enemy_alert = false
-		enemy_alert_beats_left = 0
+		_set_enemy_alert(false, 0)
 		_enemy_alert_broken_feedback()
 
 	return int(round(total))
@@ -261,6 +264,7 @@ func _apply_enemy_damage(amount: int, from_perfect: bool) -> void:
 		_on_round_won()
 
 func _on_round_won() -> void:
+	_set_enemy_alert(false, 0)
 	enemy_alive = false
 	enemy_rect.modulate.a = 0.3
 	_update_enemy_alert_visual()
@@ -384,11 +388,10 @@ func _start_round(reset_player: bool) -> void:
 	audio_player.stop()
 	audio_player.play()
 
-	beat_count = 0
+	beats_since_last_attack = 0
 	last_beat_time = -1.0
 
-	enemy_alert = false
-	enemy_alert_beats_left = 0
+	_set_enemy_alert(false, 0)
 	enemy_alive = true
 	enemy_rect.modulate.a = 1.0
 
@@ -465,9 +468,7 @@ func _try_activate_surge() -> void:
 	surge_active_left = surge_active_window
 	surge_cd_left = surge_cooldown
 
-	enemy_alert = true
-	enemy_alert_beats_left = ENEMY_ALERT_BEATS
-	_update_enemy_alert_visual()
+	_set_enemy_alert(true, ENEMY_ALERT_BEATS)
 
 	feedback.text = "SURGE!"
 	feedback.modulate = Color(0.6, 1.0, 1.0)
@@ -496,6 +497,28 @@ func _update_enemy_alert_visual() -> void:
 		enemy_rect.modulate = Color(1.0, 0.6, 0.2, enemy_rect.modulate.a)
 	else:
 		enemy_rect.modulate = Color(1, 1, 1, enemy_rect.modulate.a)
+
+func _ensure_spectrum_available() -> void:
+	var bus_index := AudioServer.get_bus_index("Spectrum")
+	if bus_index == -1:
+		if not warned_missing_spectrum_bus:
+			push_warning("Spectrum bus not found; beat detection offline.")
+			warned_missing_spectrum_bus = true
+		return
+
+	var instance := AudioServer.get_bus_effect_instance(bus_index, 0)
+	if instance != null:
+		spectrum = instance
+	else:
+		if not warned_missing_spectrum_effect:
+			push_warning("Spectrum analyzer effect not ready; retrying.")
+			warned_missing_spectrum_effect = true
+
+func _set_enemy_alert(state: bool, beats: int = ENEMY_ALERT_BEATS) -> void:
+	enemy_alert = state
+	enemy_alert_beats_left = beats if state else 0
+	beats_since_last_attack = 0
+	_update_enemy_alert_visual()
 
 func _try_guard() -> void:
 	if not player_alive:

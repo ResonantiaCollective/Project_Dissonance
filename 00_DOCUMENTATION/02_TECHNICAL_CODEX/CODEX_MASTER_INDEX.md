@@ -1,10 +1,12 @@
 # PROJECT DISSONANCE: TECHNICAL CODEX v1.0  
-*A Cyber-Sacred Systems Codex*
+
+## A Cyber-Sacred Systems Codex*
 
 ---
 
 ## SCROLL 000 — THE PULSE BEHIND THE MACHINERY  
-*The Invocation of the Engine-Born*
+
+### The Invocation of the Engine-Born*
 
 ---
 
@@ -49,14 +51,17 @@ They learn why the mechanics *feel* the way they do.
 All systems fall into one of three Engine Families:
 
 #### A) PLAYER ENGINE  
+
 Identity, stats, abilities, states, movement, and interaction.  
 How the Operative exists and acts inside Resonantia.
 
 #### B) ENEMY ENGINE  
+
 Patterns, behaviors, corruption states, and responses to rhythm.  
 How adversaries think, react, and escalate.
 
 #### C) COMBAT ENGINE  
+
 The resolver and adjudicator.  
 The mathematical heartbeat that decides:
 
@@ -126,7 +131,9 @@ and the Pulse becomes a playable reality.
 *Scroll 000 ends here.*  
 All further sections will be attached as their own files  
 under `02_TECHNICAL_CODEX/`, referenced from this index.
-# COMBAT ENGINE CODEX v1  
+
+## COMBAT ENGINE CODEX v1  
+
 ## SECTION 01 — CORE PHILOSOPHY OF COMBAT
 
 ---
@@ -209,6 +216,7 @@ And the Combat Engine is the arbiter of that negotiation.
 Every interaction in the Combat Engine is a mix of:
 
 ### **Deterministic elements**
+
 - base stats  
 - ability power  
 - enemy resistances  
@@ -216,6 +224,7 @@ Every interaction in the Combat Engine is a mix of:
 - fixed multipliers  
 
 ### **Chaotic elements**
+
 - Corruption  
 - RNG seeds based on rhythm offset  
 - Critical windows  
@@ -235,18 +244,23 @@ This blend ensures that combat is:
 Every mechanic in the Combat Engine must obey these laws:
 
 ### **LAW 1: Timing Modifies Everything**  
+
 If it interacts with combat, timing affects it.  
 Even passive abilities feel the pulse.
 
 ### **LAW 2: Corruption Distorts Outcomes**  
+
 Corruption never replaces rules — it *warps* them.
 
 ### **LAW 3: Abilities Override Base Stats**  
+
 Abilities are the strongest determinant of outcome.  
 Stats alone never win fights.
 
 ### **LAW 4: Resolution Must Be Absolute**  
+
 Once the Combat Engine produces a result:
+
 - animations follow it  
 - audio responds to it  
 - VFX express it  
@@ -284,10 +298,4 @@ Every combat event flows through the same ritual:
 This pipeline is immutable.  
 Every future mechanic must pass through it.
 
----
-
-*SECTION 01 ends here.*  
-Awaiting Operative confirmation before constructing **Section 02 — Action Framework**.
-
-00_DOCUMENTATION/02_TECHNICAL_CODEX/COMBAT_ENGINE/Combat_Engine_Codex_v1/Section_01_Core_Philosophy.md
-
+--

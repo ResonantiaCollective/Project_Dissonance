@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bc5inerhevpar"]
 
 [ext_resource type="Script" uid="uid://b31sehwagyvld" path="res://scripts/core/test_arena.gd" id="1_2s2s7"]
-[ext_resource type="AudioStream" uid="uid://bg74an3qkploh" path="res://resources/audio/IQUP_200_F_Kick_Loop_07.wav" id="2_rmtab"]
+[ext_resource type="AudioStream" uid="uid://dluyi7edeqxxs" path="res://resources/audio/Dojo_Loop_v1.000_MTE.wav" id="2_rmtab"]
 
 [node name="TestArena" type="Node2D"]
 script = ExtResource("1_2s2s7")
