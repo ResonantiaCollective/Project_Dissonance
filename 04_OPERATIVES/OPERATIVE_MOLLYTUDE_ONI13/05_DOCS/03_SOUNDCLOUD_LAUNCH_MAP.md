@@ -1,6 +1,6 @@
 # SOUNDCloud LAUNCH MAP — MOLLYTUDE // ONI13  
 
-*Hard Techno // Acid // Uptempo Industrial*
+### Hard Techno // Acid // Uptempo Industrial
 
 ---
 
@@ -15,16 +15,18 @@ with full genre alignment, anonymity, and brand cohesion.
 
 ### Display Name  
 
-**MollyTude // ONI13**
-
+MollyTude // ONI13
 
 ### URL  
+
 `soundcloud.com/mollytude-oni13` (or nearest available)
 
 ### Profile Picture  
+
 ONI13 Sigil (circular crop)
 
 ### Banner  
+
 Shrine of the Fractured Pulse (wide 2480×520)
 
 ---
@@ -32,10 +34,12 @@ Shrine of the Fractured Pulse (wide 2480×520)
 ## 3. BIOGRAPHY
 
 ### SHORT BIO
+
 Hard Techno // Acid // Uptempo Industrial from a dual identity:  
 human signal + masked machine-spirit.
 
 ### FULL BIO
+
 MollyTude // ONI13 is a dual identity forged from pressure and rhythm.  
 Molly is the human signal; ONI13 is the masked machine-frequency that expresses  
 what she cannot show. Together they forge mechanical rituals of hard techno,  
