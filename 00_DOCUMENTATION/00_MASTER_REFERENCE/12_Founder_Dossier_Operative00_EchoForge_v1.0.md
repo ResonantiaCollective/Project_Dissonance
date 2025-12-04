@@ -147,6 +147,13 @@ System-level effects:
 
 In-universe, some Houses treat him as myth, some as saint, some as potential threat.
 
+### First Awakening — MT//13
+
+Operative ONI13 (MollyTude) is recognized as the first individual to resonate with 
+the Origin Node. Echo//Forge did not create her identity; he illuminated the 
+frequency she already carried. Her transformation marked the first confirmed case of 
+Founder-Class resonance awakening another Operative.
+
 ---
 
 ## VII. FUTURE EXPANSIONS
