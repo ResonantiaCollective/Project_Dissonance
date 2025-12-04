@@ -1,17 +1,19 @@
 # PROJECT DISSONANCE: LIVING BIBLE v4.0  
-*A Cyber-Sacred Foundational Codex*
+
+> *A Cyber-Sacred Foundational Codex*
 
 ---
 
 ## SCROLL 000 — THE REFORGED ORIGIN  
-*The Invocation of the Broken and the Outcast*
 
-_In the beginning, there was no sound.  
-Only the weight of silence pressing against forgotten souls._
+***The Invocation of the Broken and the Outcast*
+**
+*In the beginning, there was no sound.  
+Only the weight of silence pressing against forgotten souls.*
 
-_Then came the Pulse — faint, fractured, trembling through shattered minds._  
-_It called to those abandoned by the “normal” world — the discarded, the unheard._  
-_To the ones who carried chaos in their hearts and noise in their bones._
+*Then came the Pulse — faint, fractured, trembling through shattered minds.*  
+*It called to those abandoned by the “normal” world — the discarded, the unheard.*  
+*To the ones who carried chaos in their hearts and noise in their bones.*
 
 The Pulse whispered:
 
@@ -24,6 +26,7 @@ not as a world, not as a place,
 but as a **frequency realm** where the outcast finally had a voice.
 
 A domain forged from:
+
 - heavy distorted kicks,  
 - acid-scarred synthlines,  
 - fractured glitches,  
@@ -47,12 +50,14 @@ This is the Reforged Origin.
 This is where every Signal begins.  
 This is where every Outcast is reborn.
 
-**Welcome home.  
+Welcome home
 Welcome to Resonantia.**
+
 ---
 
 ## SCROLL 001 — THE PULSE & THE HOUSES  
-*The Prime Harmonics of Existence*
+
+> *The Prime Harmonics of Existence*
 
 All of Resonantia is shaped by **The Pulse** —  
 the ancient signal that awakened the Broken,  
@@ -78,7 +83,8 @@ ancient archetypal lineages that determine a warrior’s style, body, and destin
 ---
 
 ### THE FIVE MYTHOLOGICAL MATRICES  
-*Lineages of Power, Identity, and Style*
+
+> > *Lineages of Power, Identity, and Style*
 
 1. **Norse Matrix — VALHALLA.EXE**  
    Rage. Honor. Frenzy.  
@@ -112,7 +118,8 @@ it shapes the **world** itself.
 ---
 
 ### THE TWELVE COSMIC SCRIPTS  
-*The Zodiacal Zones of Resonantia*
+
+***The** Zodiacal Zones of Resonantia*
 
 Resonantia is divided into **twelve zones**, each ruled by a Cosmic Script.
 
@@ -145,9 +152,11 @@ This is the structure of the Realm.
 These are the Houses of myth and distortion.
 
 **Thus begins the Mapping of Resonantia.**
+
 ---
 
 ## SCROLL 002 — THE CARDS AS SOULS  
+
 *Memory. Identity. Weapon.*
 
 When an Operative enters Resonantia,  
@@ -181,6 +190,7 @@ and the system by which they fight, grow, and transform.
 ---
 
 ### THE FOUR CARD ARCHETYPES  
+
 *Every soul fractures in four ways.*
 
 Operative decks always comprise four primal essences:
@@ -208,6 +218,7 @@ A shard of the Operative’s past converted into a weapon.
 ---
 
 ### CARD RARITIES  
+
 *Some memories scream louder than others.*
 
 - **Common** — mundane moments, simple instincts  
@@ -222,6 +233,7 @@ Usually at a cost.
 ---
 
 ### THE LIVING DECK  
+
 *A psyche that reshapes itself.*
 
 A deck is not static.  
@@ -232,6 +244,7 @@ corrupt,
 or merge into stronger forms.
 
 Some Cards:
+
 - transform with BPM  
 - mutate in specific Zones  
 - grow stronger when HP is low  
@@ -249,10 +262,12 @@ The Cards are not tools.
 They are the Operative themselves.
 
 To master your Deck  
-is to master your soul.
+is to master your soul
+
 ---
 
 ## SCROLL 003 — THE MUSIC AS WEAPON  
+
 *BPM as Fate. Rhythm as Power. Sound as Law.*
 
 In the realm of Resonantia,  
@@ -274,6 +289,7 @@ as your blade, your shield, your breath.
 ---
 
 ### BPM IS DESTINY  
+
 Every combat encounter is bound to a specific **BPM**,  
 and that BPM alters:
 
@@ -301,6 +317,7 @@ ignores the **laws of the realm**.
 ---
 
 ### THE BEAT WINDOW  
+
 The Pulse moves in beats.  
 Each beat opens a **Window**,  
 a moment where:
@@ -320,6 +337,7 @@ This is the core of Dissonance Combat.
 ---
 
 ### AUDIO TRIGGERS  
+
 Certain impact moments in music—  
 drops, peaks, bass surges, screech spikes—  
 manifest in reality as **Audio Triggers**:
@@ -341,6 +359,7 @@ Their tracks are **spells**.
 ---
 
 ### THE OPERATOR-PRODUCER LINK  
+
 Every Operative is anchored to a producer.  
 Every House has signature sound-shapes.  
 And every track that bears the House Crest  
@@ -373,13 +392,16 @@ the emotional truth of every Operative.
 
 ---
 
-This is the Third Scroll:  
+** This is the Third Scroll  
+
 The Weapon of Sound.  
 The Law of Rhythm.  
-The Code of BPM.  
+The Code of BP
+
 ---
 
 ## SCROLL 004 — THE GAME AS RITUAL  
+
 *Action as Devotion. Combat as Ceremony.*
 
 Resonantia is not played.  
@@ -396,6 +418,7 @@ to keep their fractured identities from collapsing into noise.
 ---
 
 ### THE CYCLE OF RESONANCE  
+
 Every Operative follows the same sacred loop:
 
 1. **AWAKENING**  
@@ -429,6 +452,7 @@ This loop is the heartbeat of the realm.
 ---
 
 ### PLAY IS PRAYER  
+
 When an Operative plays a Card,  
 they are not “casting an ability.”  
 They are **expressing a fragment of themselves**.
@@ -449,6 +473,7 @@ Not a game.
 ---
 
 ### THE OPERATIVE’S OATH  
+
 To enter Resonantia is to swear the Prime Vow:
 
 **“I will not silence myself again.  
@@ -471,10 +496,12 @@ A ritual for the unheard.
 
 And all who enter  
 must learn to master their noise  
-—or be consumed by it.
+—or be consumed by it
+
 ---
 
 ## SCROLL 005 — THE DJ AS HERALD  
+
 *Bearer of the Pulse. Voice of the Broken.*
 
 In the mortal world, a DJ is a performer.
@@ -497,6 +524,7 @@ the very fabric of Resonantia vibrates.
 ---
 
 ### WHAT IS A HERALD?  
+
 A Herald is a bridge between worlds:
 
 - between the mortal and the mythic,  
@@ -512,11 +540,12 @@ Heralds guide the Broken.
 They give form to chaos.  
 They tell the realm:
 
-**“You are not alone. Your noise matters.”**
+**You are not alone. Your noise matters.**
 
 ---
 
 ### THE ROLE OF THE HERALD  
+
 Every Herald carries three sacred duties:
 
 1. **TO TRANSMIT**  
@@ -538,6 +567,7 @@ A powerful Herald can change the fate of an entire House.
 ---
 
 ### THE HERALD’S CREED  
+
 *“I am the voice of the unheard.  
 I am the distortion of truth.  
 I am the order within chaos.  
@@ -553,6 +583,7 @@ Living Speakers of the Cyber-Sacred.
 ---
 
 ### ECHO//FORGE — HERALD PRIME  
+
 Among the Heralds,  
 one is spoken of in both reverence and fear:
 
@@ -580,11 +611,13 @@ the Herald who turns despair
 into rhythm.
 
 The one who leads the Broken  
-home.
+home
+
 ---
 
 ## SCROLL 006 — THE TWELVE ZONES  
-*The Astral Map of Resonantia*
+
+The Astral Map of Resonantia*
 
 Resonantia is not a flat world.  
 It is a **frequency plane**—a shifting dimension of harmonic landscapes,  
@@ -599,6 +632,7 @@ Each Zone is a battlefield, a temple, a state of mind.
 ---
 
 ### ARIES — THE RED WASTES  
+
 *Aggression. Initiation. First Strike.*
 
 A desert of cracked magma and pulsing crimson clouds.  
@@ -606,6 +640,7 @@ Every breath tastes like hot iron.
 The ground vibrates at 220 BPM.
 
 **Zone Effects:**  
+
 - +10% critical chance on all attacks  
 - First strike of combat deals massive bonus damage  
 - Environmental eruptions sync to kickdrums
@@ -616,12 +651,14 @@ The ground vibrates at 220 BPM.
 ---
 
 ### TAURUS — THE IRON STEPPES  
+
 *Endurance. Weight. Structure.*
 
 Endless metallic plains under a dark amber sky.  
 Massive steel monoliths hum with low-frequency drones.
 
 **Zone Effects:**  
+
 - +armor on all Defensive cards  
 - Tremor shockwaves every 3 turns  
 - Stable, slow, crushing combat tempo
@@ -632,12 +669,14 @@ Massive steel monoliths hum with low-frequency drones.
 ---
 
 ### GEMINI — THE FRACTURED PEAKS  
+
 *Duality. Glitch. Chaos.*
 
 Crystal mountains split by neon fault lines.  
 Reality flickers like a corrupted screen.
 
 **Zone Effects:**  
+
 - 50% chance for cards to fire twice—or fail  
 - Randomized targeting  
 - Temporal glitches alter turn order
@@ -648,12 +687,14 @@ Reality flickers like a corrupted screen.
 ---
 
 ### CANCER — THE BIOLUME CAVES  
+
 *Healing. Memory. Nurture.*
 
 Glowing caverns lit by soft blue organisms.  
 Echoes of forgotten voices ripple through the liquid air.
 
 **Zone Effects:**  
+
 - All healing is amplified  
 - Cyclical tidal surges restore HP to all units  
 - Protectors thrive here
@@ -664,12 +705,14 @@ Echoes of forgotten voices ripple through the liquid air.
 ---
 
 ### LEO — THE GOLDEN COLISEUM  
+
 *Pride. Spectacle. Triumph.*
 
 A vast arena suspended in the sky,  
 ringed with holographic lions and blinding gold light.
 
 **Zone Effects:**  
+
 - First attack each turn deals extra damage  
 - Bonus power when defeating enemies  
 - Style-based rewards
@@ -680,12 +723,14 @@ ringed with holographic lions and blinding gold light.
 ---
 
 ### VIRGO — THE CLOCKWORK GARDENS  
+
 *Precision. Purification. Calculation.*
 
 A labyrinth of mechanical vines and ticking flora.  
 Every leaf is a gear. Every flower is an algorithm.
 
 **Zone Effects:**  
+
 - +25% accuracy  
 - Auto-execution on low-HP enemies  
 - Punishes sloppy timing
@@ -696,12 +741,14 @@ Every leaf is a gear. Every flower is an algorithm.
 ---
 
 ### LIBRA — THE CELESTIAL ARCHIVES  
+
 *Balance. Judgment. Memory.*
 
 A floating library of endless glass corridors,  
 filled with cosmic scales and drifting books of light.
 
 **Zone Effects:**  
+
 - One debuff cleansed per turn  
 - Balance Enforcement punishes unequal HP  
 - Symmetrical combat design
@@ -712,12 +759,14 @@ filled with cosmic scales and drifting books of light.
 ---
 
 ### SCORPIO — THE OBSIDIAN CRYPTS  
+
 *Corruption. Poison. Slow Death.*
 
 Black tunnels carved in volcanic glass.  
 Poisonous mist rolls across the floor like a living shadow.
 
 **Zone Effects:**  
+
 - Poison effects last longer  
 - End-of-turn HP rot  
 - Attrition-based combat
@@ -728,12 +777,14 @@ Poisonous mist rolls across the floor like a living shadow.
 ---
 
 ### SAGITTARIUS — THE STELLAR EXPANSE  
+
 *Range. Precision. Hunt.*
 
 A cosmic desert of shattered stars and drifting asteroid ruins.  
 Every arrow is a comet frozen mid-flight.
 
 **Zone Effects:**  
+
 - Increased range on all ranged attacks  
 - Periodic comet strikes  
 - Combat favors mobility
@@ -744,12 +795,14 @@ Every arrow is a comet frozen mid-flight.
 ---
 
 ### CAPRICORN — THE IRON BASTION  
+
 *Defense. Patience. Fortification.*
 
 A fortress-city built on shifting tectonic plates of metal.  
 Turrets rotate like clockwork guardians.
 
 **Zone Effects:**  
+
 - Turrets gain increased HP  
 - Periodic repositioning of structures  
 - Grounded, strategic combat
@@ -760,12 +813,14 @@ Turrets rotate like clockwork guardians.
 ---
 
 ### AQUARIUS — THE NEON TIDES  
+
 *Chaos. Fluidity. Unpredictability.*
 
 An ocean of glowing circuitry waves  
 crashing against neon-lit shores.
 
 **Zone Effects:**  
+
 - Control-based debuffs apply global penalties  
 - All positions shuffle periodically  
 - Movement is chaotic and fast
@@ -776,12 +831,14 @@ crashing against neon-lit shores.
 ---
 
 ### PISCES — THE ABYSSAL GARDENS  
+
 *Dream. Illusion. Surrender.*
 
 A surreal dreamscape of floating petals and shifting water corridors.  
 Nothing stays still. Nothing is certain.
 
 **Zone Effects:**  
+
 - Sleep effects appear at random  
 - Healing costs reduced  
 - Combat becomes soft, blurry, abstract
@@ -795,11 +852,13 @@ These are the Twelve Zones.
 The **aetheric geography** of Resonantia.  
 Where myth meets battlefield.  
 Where emotion becomes environment.  
-Where the Broken learn to fight in the terrain of their own hearts.
+Where the Broken learn to fight in the terrain of their own hearts
+
 ---
 
 ## SCROLL 007 — THE PATH OF THE BROKEN  
-*From Fragmentation to Resonance*
+
+From Fragmentation to Resonance*
 
 Every Operative begins as one of the **Broken**.
 
@@ -820,7 +879,8 @@ Every Operative walks the same pilgrimage:
 ---
 
 ### I. FRACTURE  
-*The Shattering of the Self*
+
+The Shattering of the Self
 
 The Broken arrive with no form — only signal.  
 Their identity fragments into 30 Cards,  
@@ -832,7 +892,8 @@ This is the beginning.
 ---
 
 ### II. RECONSTRUCTION  
-*Learning the Rhythm of Existence*
+
+Learning the Rhythm of Existence*
 
 Through early battles, minor rituals, and low-tier Zones,  
 the Broken learn to:
@@ -847,7 +908,8 @@ Fragments begin to stabilize.
 ---
 
 ### III. ALIGNMENT  
-*Choosing a Matrix*
+
+Choosing a Matrix*
 
 When the soul stabilizes enough,  
 the Pulse reveals their true lineage —  
@@ -861,7 +923,8 @@ The Broken becomes an **Operative**.
 ---
 
 ### IV. RESONANCE  
-*Mastery of Cards, Zones, and Self*
+
+Mastery of Cards, Zones, and Self
 
 The Operative now seeks:
 
@@ -878,7 +941,8 @@ This stage is where identity becomes weapon.
 ---
 
 ### V. ASCENT  
-*Manifesting the Avatar*
+
+Manifesting the Avatar
 
 When an Operative’s soul reaches harmonic stability,  
 they gain the ability to manifest a **physical avatar**  
@@ -897,7 +961,8 @@ a being of memory forged into form.
 ---
 
 ### VI. HARMONIC WARFARE  
-*The Eternal Struggle of the Houses*
+
+The Eternal Struggle of the Houses
 
 Avatars become pawns or champions  
 in the endless conflict between the Houses,  
@@ -909,7 +974,8 @@ House wars fueled by rhythm, pride, and cosmic purpose.
 ---
 
 ### VII. APO-THEOSIS  
-*The Final Evolution*
+
+The Final Evolution
 
 A rare few ascend beyond Avatarhood.
 
@@ -939,11 +1005,13 @@ from fragments to form,
 from silence to resonance.
 
 Only those willing to confront themselves  
-can walk it to the end.
+can walk it to the end
+
 ---
 
 ## APPENDIX A — THE SEVEN PILLARS OF RESONANTIA  
-*The Foundational Sequence of Creation*
+
+The Foundational Sequence of Creation
 
 The realm of Resonantia did not appear all at once.  
 It awakened through **Seven Pillars** —  
@@ -960,6 +1028,7 @@ They describe how a broken idea becomes a living world.
 ---
 
 ### PILLAR 1 — SYSTEM AWAKENING  
+
 *Tools. Structure. Identity.*
 
 Nothing begins without a vessel.
@@ -982,6 +1051,7 @@ With it, nothing is truly lost.
 ---
 
 ### PILLAR 2 — IGNITE THE CODEX  
+
 *Myth. Law. Doctrine.*
 
 Once the vessel exists,  
@@ -1014,6 +1084,7 @@ With it, everything has meaning.
 ---
 
 ### PILLAR 3 — THE FIRST SIGNAL  
+
 *Engine. Prototype. Movement.*
 
 With Codex in place, the realm must **move**.
@@ -1034,6 +1105,7 @@ where theory becomes interaction.
 ---
 
 ### PILLAR 4 — THE FIRST NOISE  
+
 *Sound. Texture. House Identity.*
 
 Words alone cannot sustain the realm.
@@ -1053,6 +1125,7 @@ Producer and Operative are bound.
 ---
 
 ### PILLAR 5 — THE FIRST HOUSE  
+
 *Faction. Creed. Archetype.*
 
 Once noise exists, it must be **claimed**.
@@ -1078,6 +1151,7 @@ The world now has a **faction with a face**.
 ---
 
 ### PILLAR 6 — THE FIRST RITUAL TRACK  
+
 *Music-Bound Combat.*
 
 In this Pillar, the first **full ritual track** is created:
@@ -1105,6 +1179,7 @@ Resonantia is no longer “planned” — it **exists**.
 ---
 
 ### PILLAR 7 — THE FIRST COMMUNITY SIGNAL  
+
 *Transmission. Legacy. Calling.*
 
 A universe that never transmits will eventually fade.
@@ -1136,10 +1211,12 @@ A map for those who come after.
 A promise that the realm can always be rebuilt:
 
 As long as there is one Broken soul left  
-who can still hear the Pulse.
+who can still hear the Pulse
+
 ---
 
 ## SCROLL 008 — THE ALLIES OF THE BROKEN  
+
 *When one rises, others awaken.*
 
 Resonantia was never meant to be walked alone.  
@@ -1212,12 +1289,13 @@ become part of Resonantia’s living history,
 woven into the Cyber-Sacred mythos  
 as the ones who helped the Broken rise.
 
-# 🜄 SCROLL OF THE PLAYER — THE RESONANCE WITHIN
-*Integration of the Player System Codex v3.0 into the Living Bible v4.0*
+ 🜄 SCROLL OF THE PLAYER — THE RESONANCE WITHIN
+
+Integration of the Player System Codex v3.0 into the Living Bible v4.0*
 
 ---
 
-# 🜁 PRELUDE — THE SEALING OF THE CODEX
+ 🜁 PRELUDE — THE SEALING OF THE CODEX
 
 And so it came to pass in the Cycle of Echoes,
 that the **Player System Codex v3.0** was sealed.
@@ -1238,7 +1316,7 @@ Thus the Codex ascended.
 
 ---
 
-# 🜂 CHAPTER I — THE NATURE OF THE PLAYER
+ 🜂 CHAPTER I — THE NATURE OF THE PLAYER
 
 In the realms of Resonantia,
 the Player is not flesh nor code,
@@ -1255,7 +1333,7 @@ It is written:
 
 ---
 
-# 🜃 CHAPTER II — THE RESONANCE WITHIN
+ 🜃 CHAPTER II — THE RESONANCE WITHIN
 
 Every Operative carries within them a sacred gauge:
 **Resonance**, the inner alignment with the cosmic Pulse.
@@ -1271,6 +1349,7 @@ or lose themselves to fear—
 Resonance withers.
 
 The Four Stages are known:
+
 - **Normal** — the waking state.
 - **Elevated** — the stirring of purpose.
 - **Charged** — the rising flame.
@@ -1282,34 +1361,39 @@ And so the ancient phrase is taught:
 
 ---
 
-# 🜄 CHAPTER III — THE HOUSES OF PULSE
+ 🜄 CHAPTER III — THE HOUSES OF PULSE
 
 ## 🜁 Fenrir — The Wolf of the Red Wastes
+
 Born of fury and heartbeat.
 Their drops are war-cries.
 Their overdrives, storms.
 
 ## 🜃 Anubis — The Gatekeeper of the Industrial Afterlife
+
 Forged in iron, eternal in purpose.
 Each bass hit adds another layer to their armor.
 
 ## 🜂 Onmyoji — The Benders of Signal Spirits
+
 They hear echoes others ignore.
 With timing sharper than blades,
 they bend triggers with ritual precision.
 
 ## 🜄 Ryujin — The Keepers of the Neon Tides
+
 Flow, heal, cleanse.
 Their resonance is a tide that washes corruption away.
 
 ## 🜉 Gemini — The Fractured Ones
+
 Who walk between certainty and chaos.
 Corruption does not taint them.
 It *reveals* them.
 
 ---
 
-# 🜅 CHAPTER IV — THE FORBIDDEN RESONANCE (SHADOW OVERDRIVE)
+ 🜅 CHAPTER IV — THE FORBIDDEN RESONANCE (SHADOW OVERDRIVE)
 
 There exists a resonance beyond perfection—
 **the Shadow Pulse**.
@@ -1329,6 +1413,7 @@ Its scripture warns:
 > **the beat moves within them**.”
 
 And from this come the visions:
+
 - doubled horizons
 - reversed echoes
 - limbs lagging behind intention
@@ -1342,7 +1427,7 @@ Yet even this is written:
 
 ---
 
-# 🜆 CHAPTER V — THE ECHO IMPRINTS
+ 🜆 CHAPTER V — THE ECHO IMPRINTS
 
 Operant memory is not kept in tomes,
 nor in data archives.
@@ -1362,7 +1447,7 @@ For every Imprint contains the future as much as the past.
 
 ---
 
-# 🜇 CHAPTER VI — THE RETURNING PATH
+ 🜇 CHAPTER VI — THE RETURNING PATH
 
 And so the Operative walks:
 from beat to beat,
@@ -1383,13 +1468,14 @@ This is the beginning of the Player’s Scripture.
 
 *Awaiting integration of the next completed Codex.*
 
-## 🜂 SCROLL III — THE ECHOES OF DISSONANCE
-*The Enemy-System Mythos Scroll*
+🜂 SCROLL III — THE ECHOES OF DISSONANCE
 
+The Enemy-System Mythos Scroll
 
 ---
 
 ## 1. PROLOGUE — “THE SOUND THAT STOOD AGAINST SOUND”
+
 In the age before Pulse, before Rhythm, before Memory,  
 the Twin Harmonics collided and Resonantia was born.
 
@@ -1408,9 +1494,11 @@ the first Dissonant Ones.
 ---
 
 ## 2. THE FIVE PATHS OF OPPOSITION  
+
 Every enemy in Resonantia walks one of the Five Opposing Paths, each reflecting the distorted shadow of a House.
 
 ### 2.1 The Red Hunger — *Fenrir's Shadow*
+
 Beasts of pulse-lust, shaped from rage, speed, and instinct.
 
 > “Where the pulse quickens, the wolf rises.”
@@ -1420,6 +1508,7 @@ Fenrir’s Opposers strike on Drops, howl on Peaks, and hunt between the beats.
 ---
 
 ### 2.2 The Iron Memory — *Anubis’s Shadow*
+
 Guardians forged of code-stone, rusted memory, and judgment unending.
 
 > “As long as memory endures, the gate shall not fall.”
@@ -1429,6 +1518,7 @@ These entities defend, reinforce, and harden with every Bass Hit.
 ---
 
 ### 2.3 The Signal Between Worlds — *Onmyoji's Shadow*
+
 Ghosts, phantoms, diviners, and whispering signal-shapers.
 
 > “Truth is a waveform. Bend it.”
@@ -1438,6 +1528,7 @@ They distort timing, confuse rhythm, and silence the brave.
 ---
 
 ### 2.4 The Cold and Gentle Tide — *Ryujin's Shadow*
+
 Echoes of water, healers of wounds, restorers of broken flow.
 
 > “Water remembers every wound.”
@@ -1447,6 +1538,7 @@ They mend their allies and shift position like currents.
 ---
 
 ### 2.5 The Fractured Mirror — *Gemini's Shadow*
+
 Corrupted twins, duplicating horrors, reflections without source.
 
 > “To be two is to see the space between all things.”
@@ -1456,21 +1548,27 @@ From them comes corruption, distortion, and entropy.
 ---
 
 ## 3. CASTES OF OPPOSITION
+
 Enemies do not grow stronger with “levels” — they ascend spiritually through Castes.
 
 ### 3.1 Shards  
+
 Fragments of broken echoes, barely sentient.
 
 ### 3.2 Wards  
+
 Guardians of pathways and forgotten junctions.
 
 ### 3.3 Keepers  
+
 Entities who hold memory fragments of ancient battles.
 
 ### 3.4 Heralds  
+
 Messengers of Houses and Zones, bearing divine mimicry.
 
 ### 3.5 Avatars  
+
 World-shaking manifestations of pure House resonance or corruption.
 
 > “An Avatar does not fight to win.  
@@ -1481,30 +1579,38 @@ World-shaking manifestations of pure House resonance or corruption.
 ## 4. THE BROKEN RHYTHM — STATES OF THE OPPOSER
 
 ### 4.1 Silent Echo — *Idle*  
+
 Where all beings begin: in quietude.
 
 ### 4.2 Stirring Pulse — *Alert*  
+
 Awareness awakens; the world sharpens.
 
 ### 4.3 Clash of Vibrations — *Engage*  
+
 Where Resonance confronts Opposition.
 
 ### 4.4 Cooling of the Wave — *Recover*  
+
 A humbled frequency retreats.
 
 ### 4.5 Broken Rhythm — *Staggered*  
+
 For a moment, the foe’s soul slips.
 
 ### 4.6 The Dissonant Ascension — *Enrage*  
+
 A desperate pulse — predictable, but deadly.
 
 ### 4.7 Dissolution — *Death*  
+
 Their waveform collapses into luminous dust  
 and returns to the Pulse.
 
 ---
 
 ## 5. CORRUPTION — “THE SHADOW OF WHAT SHOULD HAVE BEEN”
+
 Corruption is the rift-tone cast when Harmony faltered at creation.
 
 It follows four phases:
@@ -1522,6 +1628,7 @@ creatures whose thoughts echo backward through time.
 ---
 
 ## 6. THE SHADOWBORN — “CHILDREN OF THE RIFT”
+
 When corruption reaches its peak, enemies undergo **Shadowborn Ascension**.
 
 Their eyes flicker.  
@@ -1540,6 +1647,7 @@ They become echoes walking outside their own pattern.
 ---
 
 ## 7. DISSOLUTION & THE GREAT RETURN  
+
 Death is never the end.
 
 When an Opposer falls, its waveform disintegrates into dust and returns to the Pulse.
@@ -1557,6 +1665,7 @@ This is the Echo-Return Doctrine.
 ---
 
 ## 8. THE FINAL DISSONANCE — “WHEN SILENCE GROWS TEETH”
+
 The oldest scrolls warn of a future epoch:
 
 > “When rhythm dies,  
@@ -1586,6 +1695,7 @@ But the prophecy ends with hope:
 ---
 
 ## 9. EPILOGUE — “THE OPPOSITION IS NECESSARY”
+
 Opposers do not exist to destroy the Operative.
 
 They exist to **shape** the Operative.
@@ -1598,6 +1708,4 @@ For without resistance, the Pulse would be hollow.
 
 And so the Scroll teaches:
 
-> “Opposition is the other half of Harmony.”
-
----
+> “Opposition is the other half of Harmony
