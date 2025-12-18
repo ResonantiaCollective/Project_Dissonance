@@ -12,6 +12,8 @@ extends Node2D
 @onready var surge_rect: ColorRect = $SurgeRect
 @onready var surge_label: Label = $SurgeLabel
 @onready var round_label: Label = $RoundLabel
+@onready var ability_system: AbilitySystem = $AbilitySystem
+@onready var pulse_engine: PulseEngine = $PulseEngine
 
 var spectrum: AudioEffectSpectrumAnalyzerInstance = null
 var spectrum_retry_cooldown_left: float = 0.0
@@ -70,7 +72,9 @@ var guard_perfect: bool = false
 var guard_window_left: float = 0.0
 const GUARD_WINDOW_DURATION := 0.25  # seconds
 
+
 func _ready() -> void:
+	print(">>> TESTARENA READY <<<")
 	print("Resonantia - Duel + SURGE + Enemy Patterns + Rounds + Guard online.")
 
 	audio_player.play()
@@ -99,6 +103,28 @@ func _ready() -> void:
 	label.text = ""
 	feedback.text = ""
 
+	# 🔊 connect PulseEngine beat to our handler
+	if pulse_engine:
+		pulse_engine.beat.connect(_on_pulse_beat)
+		print(">>> PULSEENGINE SIGNAL CONNECTED TO TESTARENA <<<")
+	else:
+		push_warning("PulseEngine node not found!")
+
+
+# 🔊 called by PulseEngine every beat
+func _on_pulse_beat() -> void:
+	if not enemy_alive or not player_alive:
+		print(">>> PULSE BEAT IGNORED (someone dead) <<<")
+		return
+
+	print(">>> PULSE BEAT RECEIVED IN TESTARENA <<<")
+
+	beat_state = true
+	label.text = "BEAT"
+	last_beat_time = Time.get_ticks_msec() / 1000.0
+	_on_beat_pulse()
+
+
 func _process(delta: float) -> void:
 	if spectrum == null:
 		if spectrum_retry_cooldown_left > 0.0:
@@ -126,6 +152,7 @@ func _process(delta: float) -> void:
 		pulse_strength = 1.0
 
 		if not was_on_beat:
+			print(">>> SPECTRUM BEAT DETECTED <<<")
 			label.text = "BEAT"
 			last_beat_time = Time.get_ticks_msec() / 1000.0
 			_on_beat_pulse()
@@ -138,6 +165,7 @@ func _process(delta: float) -> void:
 
 	_update_surge_timers(delta)
 	_update_guard_timer(delta)
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("restart_duel"):
@@ -187,6 +215,7 @@ func _input(event: InputEvent) -> void:
 					feedback.text = ""
 					_enemy_attack_player(1)
 
+
 func _on_beat_pulse() -> void:
 	if not enemy_alive or not player_alive:
 		return
@@ -205,6 +234,7 @@ func _on_beat_pulse() -> void:
 		beats_since_last_attack = 0
 		_enemy_attack_player(1)
 
+
 func _classify_timing() -> String:
 	if last_beat_time < 0.0:
 		return "MISS"
@@ -220,6 +250,7 @@ func _classify_timing() -> String:
 	elif offset <= GOOD_WINDOW:
 		return "GOOD"
 	return "MISS"
+
 
 func _calculate_damage(base: int, perfect_mult: float, timing: String) -> int:
 	combo += 1
@@ -247,6 +278,7 @@ func _calculate_damage(base: int, perfect_mult: float, timing: String) -> int:
 
 	return int(round(total))
 
+
 func _apply_enemy_damage(amount: int, from_perfect: bool) -> void:
 	if not enemy_alive:
 		return
@@ -262,6 +294,7 @@ func _apply_enemy_damage(amount: int, from_perfect: bool) -> void:
 
 	if enemy_hp == 0:
 		_on_round_won()
+
 
 func _on_round_won() -> void:
 	_set_enemy_alert(false, 0)
@@ -285,6 +318,7 @@ func _on_round_won() -> void:
 		feedback.modulate = Color(0.4, 1.0, 0.4)
 		await get_tree().create_timer(0.8).timeout
 		feedback.text = ""
+
 
 func _enemy_attack_player(base_amount: int) -> void:
 	if not player_alive:
@@ -328,12 +362,14 @@ func _enemy_attack_player(base_amount: int) -> void:
 		player_alive = false
 		_on_player_defeated()
 
+
 func _on_player_defeated() -> void:
 	feedback.text = "YOU FALL INTO DISSONANCE"
 	feedback.modulate = Color(1, 0.3, 0.3)
 	print("Player defeated.")
 	await get_tree().create_timer(0.6).timeout
 	feedback.text = ""
+
 
 func _enemy_alert_broken_feedback() -> void:
 	enemy_rect.modulate = Color(0.4, 0.8, 1.0, enemy_rect.modulate.a)
@@ -343,11 +379,13 @@ func _enemy_alert_broken_feedback() -> void:
 	feedback.text = ""
 	_update_enemy_alert_visual()
 
+
 func _good_feedback(text: String, color: Color) -> void:
 	feedback.text = text
 	feedback.modulate = color
 	await get_tree().create_timer(0.25).timeout
 	feedback.text = ""
+
 
 func _miss_feedback() -> void:
 	feedback.text = "MISS"
@@ -355,17 +393,22 @@ func _miss_feedback() -> void:
 	await get_tree().create_timer(0.25).timeout
 	feedback.text = ""
 
+
 func _update_combo_label() -> void:
 	combo_label.text = "COMBO: %d  (BEST: %d)" % [combo, best_combo]
+
 
 func _update_enemy_hp_label() -> void:
 	enemy_hp_label.text = "ENEMY HP: %d / %d" % [enemy_hp, enemy_max_hp]
 
+
 func _update_player_hp_label() -> void:
 	player_hp_label.text = "PLAYER HP: %d / %d" % [player_hp, player_max_hp]
 
+
 func _update_round_label() -> void:
 	round_label.text = "ROUND %d / %d" % [current_round, max_rounds]
+
 
 func _set_enemy_for_round() -> void:
 	var hp_mult := 1.0 + 0.5 * float(current_round - 1)
@@ -373,15 +416,18 @@ func _set_enemy_for_round() -> void:
 	enemy_hp = enemy_max_hp
 	_update_enemy_hp_label()
 
+
 func _reset_pulse() -> void:
 	var c := pulse_rect.modulate
 	c.a = 0.0
 	pulse_rect.modulate = c
 
+
 func _reset_duel_visuals() -> void:
 	enemy_rect.modulate = Color(1, 1, 1, 1)
 	player_rect.modulate = Color(1, 1, 1, 1)
 	enemy_rect.modulate.a = 1.0
+
 
 func _start_round(reset_player: bool) -> void:
 	# Restart audio at the beginning of each round
@@ -411,6 +457,7 @@ func _start_round(reset_player: bool) -> void:
 	guard_active = false
 	guard_perfect = false
 	guard_window_left = 0.0
+
 
 func _restart_duel() -> void:
 	print("Restarting duel (full trial).")
@@ -442,6 +489,7 @@ func _restart_duel() -> void:
 	await get_tree().create_timer(0.3).timeout
 	feedback.text = ""
 
+
 func _update_surge_timers(delta: float) -> void:
 	if surge_active:
 		surge_active_left -= delta
@@ -456,6 +504,7 @@ func _update_surge_timers(delta: float) -> void:
 				surge_cd_left = 0.0
 				surge_ready = true
 			_update_surge_ui()
+
 
 func _try_activate_surge() -> void:
 	if not player_alive or not enemy_alive:
@@ -477,6 +526,7 @@ func _try_activate_surge() -> void:
 
 	_update_surge_ui()
 
+
 func _update_surge_ui() -> void:
 	if surge_active:
 		surge_label.text = "SURGE ACTIVE"
@@ -489,6 +539,7 @@ func _update_surge_ui() -> void:
 		surge_label.text = cd_text
 		surge_rect.modulate = Color(0.2, 0.2, 0.2, 1.0)
 
+
 func _update_enemy_alert_visual() -> void:
 	if not enemy_alive:
 		return
@@ -497,6 +548,7 @@ func _update_enemy_alert_visual() -> void:
 		enemy_rect.modulate = Color(1.0, 0.6, 0.2, enemy_rect.modulate.a)
 	else:
 		enemy_rect.modulate = Color(1, 1, 1, enemy_rect.modulate.a)
+
 
 func _ensure_spectrum_available() -> void:
 	var bus_index := AudioServer.get_bus_index("Spectrum")
@@ -514,11 +566,13 @@ func _ensure_spectrum_available() -> void:
 			push_warning("Spectrum analyzer effect not ready; retrying.")
 			warned_missing_spectrum_effect = true
 
+
 func _set_enemy_alert(state: bool, beats: int = ENEMY_ALERT_BEATS) -> void:
 	enemy_alert = state
 	enemy_alert_beats_left = beats if state else 0
 	beats_since_last_attack = 0
 	_update_enemy_alert_visual()
+
 
 func _try_guard() -> void:
 	if not player_alive:
@@ -548,6 +602,7 @@ func _try_guard() -> void:
 			feedback.modulate = Color(0.8, 0.4, 0.4)
 			await get_tree().create_timer(0.15).timeout
 			feedback.text = ""
+
 
 func _update_guard_timer(delta: float) -> void:
 	if guard_active:

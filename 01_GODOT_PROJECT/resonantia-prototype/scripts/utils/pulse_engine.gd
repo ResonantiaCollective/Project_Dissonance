@@ -31,10 +31,8 @@ func _on_beat_timeout() -> void:
 	_beat_count += 1
 	emit_signal("beat")
 
-	# Half beat as simple toggle
 	if _beat_count % 2 == 0:
 		emit_signal("half_beat")
 
-	# Measure every 4 beats for now (can be configurable later)
 	if _beat_count % 4 == 0:
 		emit_signal("measure")
