@@ -1812,3 +1812,18 @@ Operational records for this transmission are archived at:
 - `Resonantia_Records/03_SETS/Echo_Forge/Resonantia_First_Pulse/00_MASTER/EXPORT_LOGS/Resonantia_First_Pulse_Release_Log_v1.0.md`
 - `Resonantia_Records/03_SETS/Echo_Forge/Resonantia_First_Pulse/00_MASTER/RENDER_NOTES/Resonantia_First_Pulse_Render_Notes_v1.0.md`
 - `Resonantia_Records/03_SETS/Echo_Forge/Resonantia_First_Pulse/06_ARTWORK/COVER/`
+---
+
+### CANON LOCK — SIGIL-09
+
+**Canon Event 001 — The First Pulse Transmission**  
+is hereby sealed.
+
+- Scroll 009 is locked against revision  
+- Resonantia: First Pulse (Continuous Mix) v1.0 is canonical  
+- House Primacy and Transmission Sequence are fixed as declared  
+
+Future transmissions may reference or evolve this moment,  
+but this origin remains unchanged.
+
+🜂 Sigil-09 affixed.
