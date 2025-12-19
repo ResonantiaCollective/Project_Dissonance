@@ -1281,3 +1281,461 @@ With this document:
 The Music Canon is now **sealed**.
 
 ---
+
+## SECTION A — CARD TRACK SOUND PALETTES
+
+### A1 — FEN-01_SURGE: KICK_SURGE LAW
+
+#### Role & Intent
+
+KICK_SURGE is not a groove element.  
+It is the **pulse hammer** of Fenrir — a forward-driving force that enforces momentum.
+
+If a kick feels fun to dance to, it is incorrect.  
+If it feels like it forces motion, it is correct.
+
+KICK_SURGE represents inevitability, not enjoyment.
+
+---
+
+#### Shape Constraints (Non-Negotiable)
+
+KICK_SURGE must exhibit:
+
+- Fast transient
+- Short to medium tail
+- No extended decay
+- No rounded or soft body
+
+Explicit exclusions:
+
+- No boomy techno kicks
+- No long 909-style tails
+- No round EDM-style kicks
+- No click-only transient kicks
+
+The kick must resolve fully before the next hit at 202 BPM.
+
+---
+
+#### Frequency Ownership
+
+- Primary weight: ~50–65 Hz
+- Punch zone: ~90–120 Hz
+- Click presence: controlled, never sharp
+
+Canonical rule:
+
+> The kick owns low-end timing.  
+> The bass owns low-end sustain.
+
+In any conflict, the kick wins.
+
+---
+
+#### Mono & Spatial Law
+
+- KICK_SURGE is 100% mono
+- Center-positioned only
+- No stereo widening
+- No chorus
+- No reverb on the main body
+
+If widening feels necessary, the sound choice is invalid.
+
+---
+
+#### Emotional Validation
+
+When soloed, KICK_SURGE must feel:
+
+- Unmusical
+- Unpleasant
+- Inevitable
+
+The correct response is not enjoyment, but submission to force.
+
+---
+
+---
+
+### A2 — FEN-01_SURGE: SUB_SURGE & BASS_SURGE RELATIONSHIP LAW
+
+#### Role Separation (Absolute)
+
+SURGE employs three low-frequency authorities:
+
+- **KICK_SURGE** — timing, command, impact  
+- **SUB_SURGE** — weight, pressure, mass  
+- **BASS_SURGE** — aggression, sustain, grind  
+
+These roles must never blur.
+
+If role boundaries collapse, power collapses.
+
+---
+
+#### Frequency Ownership (Non-Negotiable)
+
+**SUB_SURGE**
+
+- Operates below ~50 Hz
+- No meaningful energy above ~70 Hz
+- No midrange character
+- Exists only to reinforce mass
+
+**BASS_SURGE**
+
+- Primary body between ~70–180 Hz
+- Aggression harmonics above, controlled
+- Must never compete with SUB_SURGE below ~50 Hz
+
+Canonical hierarchy:
+
+> SUB is weight.  
+> BASS is aggression.  
+> KICK is command.
+
+---
+
+#### Timing & Envelope Law
+
+**SUB_SURGE**
+
+- Always ducked or sidechained by KICK_SURGE
+- Fast release, clean recovery
+- Never overlaps kick transient
+
+**BASS_SURGE**
+
+- May overlap after kick impact
+- Must never mask kick transient
+- Allowed to swell, grind, or pulse only post-impact
+
+Flab, wobble, or smear indicates violation of canon.
+
+---
+
+#### Mono & Stereo Law
+
+- **SUB_SURGE**
+  - 100% mono
+  - Center only
+  - No stereo processing under any circumstance
+
+- **BASS_SURGE**
+  - Low core remains mono
+  - Stereo harmonics allowed above ~150 Hz only
+  - Width is a controlled enhancement, never foundational
+
+If low-end feels wide, the law is broken.
+
+---
+
+#### Emotional Validation
+
+When isolated:
+
+- SUB_SURGE must feel oppressive and heavy
+- BASS_SURGE must feel angry and grinding
+
+Combined with KICK_SURGE:
+
+> The listener must feel forward pressure, not bounce.
+
+---
+
+---
+
+### A3 — FEN-01_SURGE: LEAD_SURGE & STAB_SURGE SYNTH LANGUAGE LAW
+
+#### Role Definition
+
+**LEAD_SURGE**
+
+- Issues direction
+- Signals attack windows
+- Functions as a command signal
+
+**STAB_SURGE**
+
+- Delivers impact punctuation
+- Reinforces drops and structural hits
+- Confirms force rather than narrating it
+
+LEAD points.  
+STAB strikes.
+
+They are not interchangeable.
+
+---
+
+#### Melodic Law (Strict)
+
+**LEAD_SURGE**
+
+- Minimal pitch movement
+- Short motifs, never full melodies
+- Repetition with intent
+- Rhythm takes precedence over harmony
+
+Allowed:
+
+- 1–3 note phrases
+- Stepwise motion
+- Micro-variation
+
+Forbidden:
+
+- Long melodic runs
+- Emotional chord progressions
+- Heroic or singable lines
+
+If it can be comfortably hummed, it violates canon.
+
+---
+
+**STAB_SURGE**
+
+- Single-note or dyad hits only
+- No melodic movement
+- Exists solely to reinforce rhythm and structure
+
+STAB does not tell a story.  
+It punctuates one.
+
+---
+
+#### Timing & Rhythm Law
+
+**LEAD_SURGE**
+
+- Grid-locked timing
+- Emphasis on off-beat tension
+- Never anticipates the kick
+
+**STAB_SURGE**
+
+- Coincides with kick impacts, drops, or structural accents
+- Never floats
+- Never anticipates
+
+Playfulness in timing violates Fenrir law.
+
+---
+
+#### Frequency & Space Law
+
+**LEAD_SURGE**
+
+- Midrange-focused
+- Must never invade sub or kick space
+- Controlled upper presence allowed
+
+**STAB_SURGE**
+
+- Sharp transient
+- Narrow bandwidth
+- Immediate space after impact
+
+Neither may mask:
+
+- kick transient
+- bass aggression
+- sub weight
+
+---
+
+#### Modulation & Motion
+
+- Automation is permitted
+- Movement must feel mechanical, not expressive
+
+Allowed:
+
+- filter pulses
+- rhythmic gating
+- subtle pitch modulation
+
+Forbidden:
+
+- emotional vibrato
+- evolving pads
+- ambient washes
+
+---
+
+#### Emotional Validation
+
+When isolated:
+
+- LEAD_SURGE must feel commanding and cold
+- STAB_SURGE must feel violent and final
+
+Together:
+
+> They should feel like orders being given and enforced.
+
+---
+
+---
+
+### A4 — FEN-01_SURGE: FX_SURGE, NOISE_SURGE & CONTROL BOUNDARIES
+
+#### Role of FX in SURGE
+
+FX in SURGE exist to reinforce force, not decorate it.
+
+They serve to:
+
+- emphasize transitions,
+- reinforce impact,
+- clarify structure.
+
+They must never:
+
+- distract from rhythm,
+- introduce narrative emotion,
+- add groove or atmosphere.
+
+If FX draw attention to themselves, they violate canon.
+
+---
+
+#### FX_SURGE Law (General FX)
+
+FX_SURGE may include:
+
+- short impacts,
+- reverses,
+- metallic hits,
+- noise bursts.
+
+Constraints:
+
+- short duration,
+- purpose-bound,
+- event-triggered.
+
+Forbidden:
+
+- long risers,
+- atmospheric beds,
+- melodic FX,
+- cinematic swells.
+
+FX_SURGE reinforces moments, not space.
+
+---
+
+#### RISE_SURGE Law (Transition Control)
+
+RISE_SURGE exists solely to:
+
+- signal imminent structural change,
+- build pressure before drops,
+- prepare impact.
+
+Rules:
+
+- always terminates at a structural marker,
+- never resolves softly,
+- never bleeds into the drop.
+
+Allowed:
+
+- noise-based rises,
+- filter sweeps,
+- pitch ramps.
+
+Forbidden:
+
+- melodic risers,
+- emotional crescendos,
+- uplifting or cinematic behavior.
+
+A rise must feel like tension tightening, not anticipation of joy.
+
+---
+
+#### IMPACT_SURGE Law (Structural Emphasis)
+
+IMPACT_SURGE:
+
+- coincides with DROP or PEAK,
+- reinforces kick dominance,
+- adds weight rather than brightness.
+
+Rules:
+
+- short and decisive,
+- low–mid focused,
+- never masks kick transient.
+
+If the impact is heard more than felt, it is incorrect.
+
+---
+
+#### NOISE_SURGE Law (Controlled Chaos)
+
+NOISE_SURGE exists to:
+
+- add aggression texture,
+- enhance brutality,
+- introduce controlled chaos.
+
+Rules:
+
+- noise is shaped, not free,
+- no constant noise beds,
+- no wide stereo noise in the low range.
+
+Allowed:
+
+- gated noise,
+- transient noise hits,
+- rhythm-bound distortion textures.
+
+Forbidden:
+
+- ambience,
+- wash,
+- drift,
+- uncontrolled stereo spread.
+
+Noise must feel weaponized, not atmospheric.
+
+---
+
+#### Automation Boundary Law
+
+Automation is permitted only if it:
+
+- reinforces rhythm,
+- clarifies structure,
+- increases pressure.
+
+Forbidden automation:
+
+- slow emotional fades,
+- ambient filter sweeps,
+- cinematic build-ups.
+
+Automation must feel mechanical and intentional.
+
+---
+
+#### Emotional Validation
+
+When FX are soloed, they should feel:
+
+- functional,
+- harsh,
+- unapologetic.
+
+When FX are muted, the track must still function perfectly.
+
+FX enhance SURGE; they never carry it.
+
+---
+
