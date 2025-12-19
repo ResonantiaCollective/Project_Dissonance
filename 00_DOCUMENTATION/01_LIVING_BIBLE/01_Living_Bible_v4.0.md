@@ -1363,29 +1363,29 @@ And so the ancient phrase is taught:
 
  🜄 CHAPTER III — THE HOUSES OF PULSE
 
-## 🜁 Fenrir — The Wolf of the Red Wastes
+ 🜁 Fenrir — The Wolf of the Red Wastes
 
 Born of fury and heartbeat.
 Their drops are war-cries.
 Their overdrives, storms.
 
-## 🜃 Anubis — The Gatekeeper of the Industrial Afterlife
+ 🜃 Anubis — The Gatekeeper of the Industrial Afterlife
 
 Forged in iron, eternal in purpose.
 Each bass hit adds another layer to their armor.
 
-## 🜂 Onmyoji — The Benders of Signal Spirits
+ 🜂 Onmyoji — The Benders of Signal Spirits
 
 They hear echoes others ignore.
 With timing sharper than blades,
 they bend triggers with ritual precision.
 
-## 🜄 Ryujin — The Keepers of the Neon Tides
+ 🜄 Ryujin — The Keepers of the Neon Tides
 
 Flow, heal, cleanse.
 Their resonance is a tide that washes corruption away.
 
-## 🜉 Gemini — The Fractured Ones
+ 🜉 Gemini — The Fractured Ones
 
 Who walk between certainty and chaos.
 Corruption does not taint them.
@@ -1468,13 +1468,13 @@ This is the beginning of the Player’s Scripture.
 
 *Awaiting integration of the next completed Codex.*
 
-🜂 SCROLL III — THE ECHOES OF DISSONANCE
+ 🜂 SCROLL III — THE ECHOES OF DISSONANCE
 
 The Enemy-System Mythos Scroll
 
 ---
 
-## 1. PROLOGUE — “THE SOUND THAT STOOD AGAINST SOUND”
+ ## 1. PROLOGUE — “THE SOUND THAT STOOD AGAINST SOUND”
 
 In the age before Pulse, before Rhythm, before Memory,  
 the Twin Harmonics collided and Resonantia was born.
@@ -1493,11 +1493,11 @@ the first Dissonant Ones.
 
 ---
 
-## 2. THE FIVE PATHS OF OPPOSITION  
+ ## 2. THE FIVE PATHS OF OPPOSITION  
 
 Every enemy in Resonantia walks one of the Five Opposing Paths, each reflecting the distorted shadow of a House.
 
-### 2.1 The Red Hunger — *Fenrir's Shadow*
+ ### 2.1 The Red Hunger — *Fenrir's Shadow*
 
 Beasts of pulse-lust, shaped from rage, speed, and instinct.
 
@@ -1709,3 +1709,106 @@ For without resistance, the Pulse would be hollow.
 And so the Scroll teaches:
 
 > “Opposition is the other half of Harmony
+
+
+## SCROLL 009 — THE FIRST PULSE TRANSMISSION  
+> *Canon Event 001 — The Signal Goes Public*
+
+In the Cycle where silence tried to reclaim the Broken,  
+Echo//Forge did not retreat.
+
+He forged.
+
+Not a track — a **transmission**.  
+Not a playlist — a **single uninterrupted pulse**.  
+A living waveform sent from the Forge into the open world,  
+to prove that Resonantia was not imagined…  
+it was **real**.
+
+And the Codex recorded the moment:
+
+**Resonantia: First Pulse (Continuous Mix) [v1.0]**  
+A full-length signal session from Resonantia Records —  
+the first unified pulse across the Houses.
+
+---
+
+### THE HOUSE SEQUENCE OF THE FIRST PULSE  
+
+The Houses aligned in one uninterrupted chain:
+
+**Anubis → Ryujin → Onmyoji → Olympus → Fenrir**
+
+A deliberate order.  
+A ritual path.  
+A proof of structure inside distortion.
+
+This sequence is now **canon**.  
+Future transmissions may evolve it, fracture it, invert it—  
+but this first chain remains the origin of public resonance.
+
+---
+
+### THE DOCTRINE OF THE UNBROKEN MIX  
+
+A continuous mix is not convenience.  
+It is doctrine:
+
+- **No silence between phases**  
+- **No reset between identities**  
+- **No escape from the waveform**
+
+The listener does not “skip.”  
+They **enter**.  
+And once inside, they are carried.
+
+---
+
+### RELEASE SEAL  
+
+This transmission was sealed as follows:
+
+- **Version:** v1.0  
+- **Limiter:** none  
+- **True Peak:** -1.0 dBFS  
+- **Rights:** © 2025 Resonantia Collective — All rights reserved  
+
+The release was marked as **PUBLIC**.  
+Not for validation —  
+but to summon the ones who recognize themselves in the noise.
+
+---
+
+### WHAT THIS MEANS FOR RESONANTIA  
+
+From this Scroll onward, Resonantia is no longer only a Codex.  
+It is a **broadcast**.
+
+The First Pulse Transmission establishes:
+
+1. **The realm can be carried into the mortal world**  
+2. **The Houses can be unified under one signal**  
+3. **Echo//Forge’s Herald role is not myth — it is function**
+
+And the Codex speaks the vow again:
+
+**“No plan. Just instinct.  
+And instinct, sharpened by structure, becomes destiny.”**
+
+---
+
+This is the First Pulse.  
+This is Canon Event 001.  
+The moment the realm stopped whispering…
+
+…and began to **transmit**.
+
+---
+
+### ARCHIVE NOTE (Ops Link)
+
+Operational records for this transmission are archived at:
+
+- `Resonantia_Records/03_SETS/Echo_Forge/Resonantia_First_Pulse/00_MASTER/EXPORT_LOGS/Resonantia_First_Pulse_Release_Log_v1.0.md`
+- `Resonantia_Records/03_SETS/Echo_Forge/Resonantia_First_Pulse/00_MASTER/RENDER_NOTES/Resonantia_First_Pulse_Render_Notes_v1.0.md`
+- `Resonantia_Records/03_SETS/Echo_Forge/Resonantia_First_Pulse/06_ARTWORK/COVER/`
