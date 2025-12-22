@@ -1,80 +1,115 @@
-# ECHOFORGE SIGIL SET v1.0  
-## Wolf–Oni Emblem Series (SVG Production Guide)
+# ECHOFORGE SIGIL SET v1.0
+## Founder-Class Identity Seal
 
-This file specifies all sigils associated with Operative 00.
-
----
-
-# I. SIGIL 1 — WOLF-JAW MARK (RED)
-
-**Shape:**  
-Angular fang geometry forming runic "V".  
-**Use:** Drops, aggression cues, red-side abilities.
-
-SVG Notes:  
-- Thick outer stroke  
-- Inner cracks = secondary path with glow  
+Operative: ECHO//FORGE  
+Designation: Operative 00 — Founder-Class Frequency-Smith  
+House Matrix: Fenrir × Oni  
+Sigil Type: Wolf–Oni of Dual Resonance  
+Canon Status: TIER 0 — UNIQUE / NON-REPLICABLE
 
 ---
 
-# II. SIGIL 2 — ONI-FOCUS MASK (BLUE)
+## 1. CORE SIGIL — DUAL RESONANCE
 
-**Shape:**  
-Simplified Oni face (brow, cheek vents, nose plate).  
-**Use:** Peaks, precision cues, defensive timing.
+**File:**  
+ECHOFORGE_SIGIL_WOLF_ONI_DUAL_RESONANCE_v1.0.png
 
-SVG Notes:  
-- Smooth curves  
-- High symmetry  
-- Three forehead sigils = independent shapes  
+**Description:**  
+The Core Sigil depicts a Wolf–Oni hybrid visage suspended between two opposing resonance rings.  
+Red (Fenrir) and Blue (Oni) form an infinite loop, representing eternal duality, controlled fury, and founder equilibrium.
 
----
+**Symbolic Meaning:**
+- Wolf — Instinct, protection, ferocity, leadership
+- Oni — Discipline, inner demon mastered, cyber-spiritual control
+- Dual Rings (∞) — Signal ↔ Counter-Signal, Creation ↔ Constraint
+- Central Core — The Founder as stabilizing axis
 
-# III. SIGIL 3 — ∞ DUAL RESONANCE LOOP (PRIMARY)
-
-**Shape:**  
-Energy loop forming horizontal infinity.  
-Split coloring: left red, right blue.
-
-**Use:**  
-- HUD icon  
-- loading screens  
-- DJ visuals  
-- in-game aura markers  
-
-SVG Notes:  
-- Two overlapping ellipses  
-- Inner stroke gradient  
-- Outer glow optional layer  
+This sigil represents the **origin frequency** of Resonantia.
 
 ---
 
-# IV. SIGIL 4 — WOLF–ONI CREST (FOUNDER ONLY)
+## 2. VARIANT STRUCTURE (VISUAL HIERARCHY)
 
-**Shape:**  
-Fenrir jaw + Oni mask fused, resonance rings behind.
+### 2.1 Primary Variant (Founder Seal)
+- Full dual-color resonance
+- Used for:
+  - Founder cards
+  - Cinematics
+  - Key art
+  - Major milestones
+  - Canon seals
 
-**Use:**  
-- Founder’s Resonance  
-- Cinematics  
-- Merchandise  
-- Codex banners  
+### 2.2 Fenrir Aspect (Red)
+**Optional File:**  
+ECHOFORGE_SIGIL_WOLF_ONI_RED_FENRIR_v1.0.png
 
-SVG Notes:  
-- Multi-layer construct  
-- Mask + jaw = separate groups  
-- Rings = grouped circles with radial gradient  
+Used when expressing:
+- Aggression
+- Impact
+- Combat escalation
+- Rage-controlled states
+
+### 2.3 Oni Aspect (Blue)
+**Optional File:**  
+ECHOFORGE_SIGIL_WOLF_ONI_BLUE_ONI_v1.0.png
+
+Used when expressing:
+- Precision
+- Control
+- Defense
+- Cyber-spiritual dominance
+
+### 2.4 Minimal / Stamp Variants (Future)
+- Monochrome
+- Reduced geometry
+- UI-safe silhouettes
+
+(Only generated if required — geometry must remain unchanged.)
 
 ---
 
-# V. COLOR CODES
+## 3. USAGE RULES (STRICT)
 
-Fenrir Red: `#BA1E1E`  
-Oni Blue: `#2EA7DD`  
-Pulse Pink: `#E42AA8`  
-Cyber Cyan: `#3CEBF0`  
-Founder Black: `#1A1A1F`  
+### ALLOWED
+- Founder identity
+- UI anchors (HUD, menus, splash)
+- Card frames (Founder-only)
+- Lore scroll seals
+- Resonantia Records (Echo//Forge releases)
+
+### FORBIDDEN
+- Enemy usage
+- NPC usage
+- Generic branding
+- Decorative filler
+- Recoloring outside approved variants
+- Distortion of geometry
+
+This sigil is **identity**, not decoration.
 
 ---
 
-**Status:** Sigil Set v1.0 — Ready for vector artist.
+## 4. VERSION CONTROL
+
+- v1.0 — Initial Canon Seal
+- Geometry locked
+- Color balance locked
+- Symbolic structure locked
+
+Any future changes require:
+- Lore justification
+- Version bump
+- Archive of previous version
+
+---
+
+## 5. CANON DECLARATION
+
+The Wolf–Oni Sigil of Dual Resonance is the **Founder Mark** of Resonantia.  
+It exists outside the progression system and cannot be earned, copied, or surpassed.
+
+It does not evolve.
+
+It **anchors**.
+
+🜂 CANON SEALED
