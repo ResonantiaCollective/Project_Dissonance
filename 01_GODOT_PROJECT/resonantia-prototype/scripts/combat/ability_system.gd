@@ -9,7 +9,7 @@ class Ability:
 	var target_type: String = "single" # single, aoe, self, zone
 	var required_beat_window: int = -1 # -1 = no timing requirement
 
-	func cast(caster, target, context := {}) -> void:
+	func cast(_caster, _target, _context := {}) -> void:
 		# To be implemented per-ability
 		pass
 

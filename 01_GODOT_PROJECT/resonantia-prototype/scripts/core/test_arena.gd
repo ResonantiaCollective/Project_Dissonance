@@ -15,16 +15,30 @@ extends Node2D
 @onready var ability_system: AbilitySystem = $AbilitySystem
 @onready var pulse_engine: PulseEngine = $PulseEngine
 
+@export var bpm: float = 190.0
+@export var beat_offset: float = 0.0
+@export var latency_offset: float = 0.0
+@export var use_spectrum_beats: bool = false
+@export var beat_threshold: float = 0.05
+@export var spectrum_low_hz: float = 60.0
+@export var spectrum_high_hz: float = 220.0
+@export var spectrum_smooth: float = 0.2
+@export var spectrum_peak_multiplier: float = 1.6
+@export var spectrum_min_interval: float = 0.18
+
 var spectrum: AudioEffectSpectrumAnalyzerInstance = null
 var spectrum_retry_cooldown_left: float = 0.0
 const SPECTRUM_RETRY_INTERVAL := 0.5
-var beat_threshold: float = 0.05
-var beat_state: bool = false
+var spectrum_beat_state: bool = false
+var spectrum_energy_ema: float = 0.0
+var spectrum_energy_prev: float = 0.0
+var spectrum_last_beat_time: float = -1.0
 
 var debug_timer: float = 0.0
 var debug_enabled: bool = false
 var pulse_strength: float = 0.0
 var pulse_decay: float = 5.0
+var beat_label_left: float = 0.0
 
 var combo: int = 0
 var best_combo: int = 0
@@ -77,8 +91,15 @@ func _ready() -> void:
 	print(">>> TESTARENA READY <<<")
 	print("Resonantia - Duel + SURGE + Enemy Patterns + Rounds + Guard online.")
 
-	audio_player.play()
-	_ensure_spectrum_available()
+	if pulse_engine:
+		pulse_engine.set_audio_player(audio_player)
+		pulse_engine.set_bpm(bpm)
+		pulse_engine.beat_offset = beat_offset
+		pulse_engine.latency_offset = latency_offset
+		if not use_spectrum_beats:
+			pulse_engine.beat.connect(_on_pulse_beat)
+	if use_spectrum_beats:
+		_ensure_spectrum_available()
 
 	_reset_pulse()
 	_reset_duel_visuals()
@@ -102,66 +123,66 @@ func _ready() -> void:
 
 	label.text = ""
 	feedback.text = ""
-
-	# 🔊 connect PulseEngine beat to our handler
-	if pulse_engine:
-		pulse_engine.beat.connect(_on_pulse_beat)
-		print(">>> PULSEENGINE SIGNAL CONNECTED TO TESTARENA <<<")
-	else:
+	if not pulse_engine:
 		push_warning("PulseEngine node not found!")
 
 
 # 🔊 called by PulseEngine every beat
-func _on_pulse_beat() -> void:
+func _on_pulse_beat(_beat_index: int, beat_time: float) -> void:
+	if use_spectrum_beats:
+		return
 	if not enemy_alive or not player_alive:
 		print(">>> PULSE BEAT IGNORED (someone dead) <<<")
 		return
 
 	print(">>> PULSE BEAT RECEIVED IN TESTARENA <<<")
 
-	beat_state = true
-	label.text = "BEAT"
-	last_beat_time = Time.get_ticks_msec() / 1000.0
-	_on_beat_pulse()
+	_register_beat(beat_time)
 
 
 func _process(delta: float) -> void:
-	if spectrum == null:
-		if spectrum_retry_cooldown_left > 0.0:
-			spectrum_retry_cooldown_left = max(spectrum_retry_cooldown_left - delta, 0.0)
-		else:
-			_ensure_spectrum_available()
-			spectrum_retry_cooldown_left = SPECTRUM_RETRY_INTERVAL
+	if use_spectrum_beats:
 		if spectrum == null:
-			label.text = "NO SPECTRUM"
-			return
+			if spectrum_retry_cooldown_left > 0.0:
+				spectrum_retry_cooldown_left = max(spectrum_retry_cooldown_left - delta, 0.0)
+			else:
+				_ensure_spectrum_available()
+				spectrum_retry_cooldown_left = SPECTRUM_RETRY_INTERVAL
+			if spectrum == null:
+				label.text = "NO SPECTRUM"
+		else:
+			debug_timer += delta
+			var vec: Vector2 = spectrum.get_magnitude_for_frequency_range(spectrum_low_hz, spectrum_high_hz)
+			var energy: float = vec.length()
+			spectrum_energy_ema = lerp(spectrum_energy_ema, energy, spectrum_smooth)
+			var flux: float = energy - spectrum_energy_prev
+			spectrum_energy_prev = energy
 
-	debug_timer += delta
+			var now: float = _get_timing_time()
+			var min_interval: float = spectrum_min_interval
+			if bpm > 0.0:
+				min_interval = max(min_interval, (60.0 / bpm) * 0.5)
+			var threshold: float = max(beat_threshold, spectrum_energy_ema * spectrum_peak_multiplier)
 
-	var vec: Vector2 = spectrum.get_magnitude_for_frequency_range(500.0, 3000.0)
-	var energy := vec.length()
+			if debug_enabled and debug_timer > 0.3:
+				print("Energy:", energy, "Threshold:", threshold, "Flux:", flux)
+				debug_timer = 0.0
 
-	if debug_enabled and debug_timer > 0.3:
-		print("Energy:", energy)
-		debug_timer = 0.0
-
-	var was_on_beat := beat_state
-
-	if energy > beat_threshold:
-		beat_state = true
-		pulse_strength = 1.0
-
-		if not was_on_beat:
-			print(">>> SPECTRUM BEAT DETECTED <<<")
-			label.text = "BEAT"
-			last_beat_time = Time.get_ticks_msec() / 1000.0
-			_on_beat_pulse()
-	else:
-		beat_state = false
-		label.text = ""
+			var was_on_beat: bool = spectrum_beat_state
+			var is_above: bool = energy > threshold
+			if is_above and not was_on_beat and flux > 0.0 and (now - spectrum_last_beat_time) >= min_interval:
+				spectrum_last_beat_time = now
+				print(">>> SPECTRUM BEAT DETECTED <<<")
+				_register_beat(now)
+			spectrum_beat_state = is_above
 
 	pulse_strength = max(pulse_strength - pulse_decay * delta, 0.0)
 	pulse_rect.modulate.a = pulse_strength * 0.25
+
+	if beat_label_left > 0.0:
+		beat_label_left = max(beat_label_left - delta, 0.0)
+		if beat_label_left == 0.0:
+			label.text = ""
 
 	_update_surge_timers(delta)
 	_update_guard_timer(delta)
@@ -227,7 +248,7 @@ func _on_beat_pulse() -> void:
 			enemy_alert_beats_left = 0
 			_set_enemy_alert(false, 0)
 
-	var attack_interval := ENEMY_ALERT_ATTACK_BEATS if enemy_alert else ENEMY_NORMAL_ATTACK_BEATS
+	var attack_interval: int = ENEMY_ALERT_ATTACK_BEATS if enemy_alert else ENEMY_NORMAL_ATTACK_BEATS
 
 	beats_since_last_attack += 1
 	if beats_since_last_attack >= attack_interval:
@@ -236,18 +257,24 @@ func _on_beat_pulse() -> void:
 
 
 func _classify_timing() -> String:
-	if last_beat_time < 0.0:
+	if use_spectrum_beats:
+		if last_beat_time < 0.0:
+			return "MISS"
+		var now: float = _get_timing_time()
+		var offset: float = abs(now - last_beat_time)
+		if offset <= PERFECT_WINDOW:
+			return "PERFECT"
+		elif offset <= GOOD_WINDOW:
+			return "GOOD"
 		return "MISS"
 
-	var now := Time.get_ticks_msec() / 1000.0
-	var offset := now - last_beat_time
-
-	if offset < 0.0:
+	if pulse_engine == null:
 		return "MISS"
 
-	if offset <= PERFECT_WINDOW:
+	var pulse_offset: float = pulse_engine.get_offset_from_nearest_beat()
+	if pulse_offset <= PERFECT_WINDOW:
 		return "PERFECT"
-	elif offset <= GOOD_WINDOW:
+	elif pulse_offset <= GOOD_WINDOW:
 		return "GOOD"
 	return "MISS"
 
@@ -310,13 +337,13 @@ func _on_round_won() -> void:
 		current_round += 1
 		feedback.text = "NEXT ROUND"
 		feedback.modulate = Color(0.6, 0.9, 1.0)
-		await get_tree().create_timer(0.6).timeout
+		await get_tree().create_timer(10.0).timeout
 		feedback.text = ""
 		_start_round(false)
 	else:
 		feedback.text = "TRIAL COMPLETE"
 		feedback.modulate = Color(0.4, 1.0, 0.4)
-		await get_tree().create_timer(0.8).timeout
+		await get_tree().create_timer(15.0).timeout
 		feedback.text = ""
 
 
@@ -367,7 +394,7 @@ func _on_player_defeated() -> void:
 	feedback.text = "YOU FALL INTO DISSONANCE"
 	feedback.modulate = Color(1, 0.3, 0.3)
 	print("Player defeated.")
-	await get_tree().create_timer(0.6).timeout
+	await get_tree().create_timer(25.0).timeout
 	feedback.text = ""
 
 
@@ -419,7 +446,7 @@ func _set_enemy_for_round() -> void:
 
 func _reset_pulse() -> void:
 	var c := pulse_rect.modulate
-	c.a = 0.0
+	c.a = 5.0
 	pulse_rect.modulate = c
 
 
@@ -433,9 +460,16 @@ func _start_round(reset_player: bool) -> void:
 	# Restart audio at the beginning of each round
 	audio_player.stop()
 	audio_player.play()
+	if pulse_engine:
+		pulse_engine.start()
 
 	beats_since_last_attack = 0
 	last_beat_time = -1.0
+	if use_spectrum_beats:
+		spectrum_energy_ema = 0.0
+		spectrum_energy_prev = 0.0
+		spectrum_last_beat_time = -1.0
+		spectrum_beat_state = false
 
 	_set_enemy_alert(false, 0)
 	enemy_alive = true
@@ -462,9 +496,6 @@ func _start_round(reset_player: bool) -> void:
 func _restart_duel() -> void:
 	print("Restarting duel (full trial).")
 
-	audio_player.stop()
-	audio_player.play()
-
 	surge_ready = true
 	surge_active = false
 	surge_cd_left = 0.0
@@ -486,7 +517,7 @@ func _restart_duel() -> void:
 
 	feedback.text = "RITUAL RESTARTED"
 	feedback.modulate = Color(0.6, 0.8, 1.0)
-	await get_tree().create_timer(0.3).timeout
+	await get_tree().create_timer(10.0).timeout
 	feedback.text = ""
 
 
@@ -611,3 +642,17 @@ func _update_guard_timer(delta: float) -> void:
 			guard_window_left = 0.0
 			guard_active = false
 			guard_perfect = false
+
+
+func _get_timing_time() -> float:
+	if pulse_engine:
+		return pulse_engine.get_clock_time()
+	return Time.get_ticks_msec() / 1000.0
+
+
+func _register_beat(beat_time: float) -> void:
+	label.text = "BEAT"
+	beat_label_left = 0.12
+	last_beat_time = beat_time
+	pulse_strength = 1.0
+	_on_beat_pulse()

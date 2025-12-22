@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b31sehwagyvld" path="res://scripts/core/test_arena.gd" id="1_2s2s7"]
 [ext_resource type="Script" uid="uid://bodb1sqhau2x4" path="res://scripts/combat/ability_system.gd" id="2_mnrse"]
-[ext_resource type="AudioStream" uid="uid://dluyi7edeqxxs" path="res://resources/audio/Dojo_Loop_v1.000_MTE.wav" id="2_rmtab"]
 [ext_resource type="Script" uid="uid://c0vp5hidy87wn" path="res://scripts/utils/pulse_engine.gd" id="3_ma418"]
+[ext_resource type="AudioStream" uid="uid://byx6p6sdf7pn5" path="res://resources/audio/maybe i love breakcore - 2025-Dec-20.wav" id="4_mnrse"]
 
 [node name="TestArena" type="Node2D"]
 script = ExtResource("1_2s2s7")
@@ -19,33 +19,33 @@ metadata/_custom_type_script = "uid://c0vp5hidy87wn"
 [node name="PlayerRect" type="ColorRect" parent="."]
 offset_left = 128.0
 offset_top = 256.0
-offset_right = 354.0
-offset_bottom = 351.0
+offset_right = 320.0
+offset_bottom = 384.0
 color = Color(0, 0.5882353, 0.65882355, 0.5764706)
 
 [node name="Label" type="Label" parent="."]
 offset_left = 128.0
-offset_top = 234.0
+offset_top = 224.0
 offset_right = 320.0
-offset_bottom = 259.0
+offset_bottom = 249.0
 pivot_offset = Vector2(95, 32)
 text = "Resonantia Prototype A1"
 
 [node name="FeedbackLabel" type="Label" parent="."]
-offset_left = 283.0
-offset_top = 322.0
-offset_right = 320.0
-offset_bottom = 350.0
+offset_left = 320.0
+offset_top = 256.0
+offset_right = 448.0
+offset_bottom = 320.0
 
 [node name="ComboLabel" type="Label" parent="."]
-offset_left = 173.0
-offset_top = 262.0
-offset_right = 275.0
-offset_bottom = 285.0
+offset_left = 176.0
+offset_top = 352.0
+offset_right = 278.0
+offset_bottom = 375.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 1
-stream = ExtResource("2_rmtab")
+stream = ExtResource("4_mnrse")
 bus = &"Spectrum"
 
 [node name="BeatFlash" type="ColorRect" parent="."]
@@ -56,46 +56,46 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="EnemyRect" type="ColorRect" parent="."]
-offset_left = 724.0
-offset_top = 271.0
-offset_right = 907.0
-offset_bottom = 346.0
+offset_left = 576.0
+offset_top = 256.0
+offset_right = 768.0
+offset_bottom = 384.0
 color = Color(0.3540495, 0.0057975417, 0.46205813, 1)
 
 [node name="EnemyHPLabel" type="Label" parent="."]
-offset_left = 721.0
-offset_top = 245.0
-offset_right = 772.0
-offset_bottom = 268.0
+offset_left = 608.0
+offset_top = 288.0
+offset_right = 736.0
+offset_bottom = 352.0
 
 [node name="PlayerHPLabel" type="Label" parent="."]
-offset_left = 128.0
-offset_top = 319.0
-offset_right = 183.0
-offset_bottom = 348.0
+offset_left = 168.0
+offset_top = 288.0
+offset_right = 288.0
+offset_bottom = 352.0
 
 [node name="SurgeRect" type="ColorRect" parent="."]
-offset_left = 153.0
-offset_top = 358.0
-offset_right = 296.0
-offset_bottom = 387.0
+offset_left = 128.0
+offset_top = 384.0
+offset_right = 320.0
+offset_bottom = 410.0
 color = Color(0.88431424, 3.3450872e-06, 3.85046e-07, 0.3647059)
 
 [node name="SurgeLabel" type="Label" parent="."]
-offset_left = 166.0
-offset_top = 362.0
-offset_right = 250.0
-offset_bottom = 385.0
+offset_left = 200.0
+offset_top = 384.0
+offset_right = 256.0
+offset_bottom = 408.0
 text = "SURGE "
 
 [node name="RoundLabel" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 472.0
-offset_top = 264.0
-offset_right = 568.0
-offset_bottom = 287.0
+offset_left = 400.0
+offset_top = 312.0
+offset_right = 496.0
+offset_bottom = 335.0
 grow_horizontal = 2
 size_flags_horizontal = 6
 size_flags_vertical = 3
